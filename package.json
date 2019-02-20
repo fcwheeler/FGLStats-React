@@ -1,5 +1,5 @@
 {
-  "name": "FGLStats-React",
+  "name": "FGLStatsReact",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +9,7 @@
     "cheerio-tableparser": "^1.0.1",
     "highcharts": "^7.0.3",
     "highcharts-react-official": "^2.0.0",
+    "node-fetch": "^2.3.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-router": "^4.3.1",

@@ -3,10 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Leaderboard from "./Dashboard/Leaderboard";
 import Chart from "./Dashboard/Chart";
 import MenuAppBar from "./MenuAppBar";
-import {Grid, Paper} from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import './App.css';
 
-import {getLeaderboard} from "./Controllers/FGLController"
 
 const styles = theme => ({
   root: {
@@ -23,12 +23,13 @@ class App extends Component {
 
 
   render() {
-
-    var leaderboard = getLeaderboard(5);
-
-
-
     const { classes } = this.props;
+
+
+    //var leaderboard = getLeaderboard(5);
+
+
+    
     return (
       <div className="App">   
       <MenuAppBar title="FGL Stats"></MenuAppBar>

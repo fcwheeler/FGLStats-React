@@ -1,49 +1,16 @@
 const rp = require('request-promise');
+const fetch = require('node-fetch');
 const $ = require('cheerio');
 const cheerioTableparser = require('cheerio-tableparser');
-const leaderboardurl = 'http://www.fglweb.com/fglpool01i.php?ifid=942';
+const leaderboardurl = 'http://localhost:3001/leaderboarddata'; // 'http://www.fglweb.com/fglpool01i.php?ifid=942';
 const survivorurl = 'http://www.fglweb.com/fglrptownerpickdetaili.php?ifid=942';
 
-exports.getleaderboard = (n) => { 
-    rp(leaderboardurl)
-    .then(function(html){
-      //success!
-      var result = $('table', html)[3];
-      var rows = $(result).find("tr")
-      //console.log($('script', html));
-      var namelist = [];
-  
-    
-      cheerioTableparser($);
-  
-      var data = $(result).parsetable(true, true, true);
-
-
-      let totalRows = Math.min(2 + n,data[0].length);
-      for (let i = 2; i < totalRows ; i++) {
-            
-              // each row is represented in each list. Each list is a column
-  
-                  
-                  var rowtext = data[1][i];
-                  //console.log(data[0][i]);
-  
-                  var teamobj = {
-                      id: i,
-                      name : rowtext,
-                      YTDearnings : data[2][i]
-                  };       
-  
-            namelist.push(teamobj);
-                 
-        
-      }
-
-      console.log(namelist.length);
-  
-        return namelist
-      //console.log();
-      //console.log(namelist[1]);
+export let getleaderboard = (res) => { 
+  rp(leaderboardurl)
+    .then(function(data){      
+      var namelist = JSON.parse(data);   
+        res(namelist)
+      
   
     })
     .catch(function(err){
@@ -53,7 +20,7 @@ exports.getleaderboard = (n) => {
 
 };
 
-exports.getSurvivors = (req, res) => { 
+export let getSurvivors = (req, res) => { 
   rp(survivorurl)
   .then(function(html){
     //success!
@@ -77,7 +44,6 @@ exports.getSurvivors = (req, res) => {
         }
     }
 
-    var weekindexList = [];
 
     var initialcount = data[0].filter(function(x){return x=="1"}).length;
 
@@ -125,7 +91,6 @@ exports.getSurvivors = (req, res) => {
               {
                 let nameset = false;
                 let namesetIndex = 0;
-                let TeamName = "";
                 while(!nameset)                 
                   {
                     if(data[0][j-namesetIndex] == "1")
