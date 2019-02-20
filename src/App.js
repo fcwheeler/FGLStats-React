@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import InputPaper from "./InputPaper";
-import Chart from "./Chart";
+import Leaderboard from "./Dashboard/Leaderboard";
+import Chart from "./Dashboard/Chart";
 import MenuAppBar from "./MenuAppBar";
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import {Grid, Paper} from '@material-ui/core';
 import './App.css';
+
+import {getLeaderboard} from "./Controllers/FGLController"
 
 const styles = theme => ({
   root: {
@@ -23,6 +24,10 @@ class App extends Component {
 
   render() {
 
+    var leaderboard = getLeaderboard(5);
+
+
+
     const { classes } = this.props;
     return (
       <div className="App">   
@@ -33,9 +38,7 @@ class App extends Component {
  
       </Grid>
       <Grid container  direction="row"  justify="center"  alignItems="center" className={classes.root} spacing={16}>
-
-      <Grid item ><InputPaper title="Paper 1"></InputPaper></Grid>
-      <Grid item ><InputPaper title="Paper 2"></InputPaper></Grid>   
+      <Grid item ><Leaderboard></Leaderboard></Grid>  
       </Grid>
       </Paper>
       </div>
