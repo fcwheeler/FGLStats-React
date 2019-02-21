@@ -8,7 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import {Link} from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import {Link as RouterLink} from 'react-router-dom';
 
 const styles = {
   root: {
@@ -66,8 +67,9 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                 <Link to="/"><MenuItem onClick={this.handleClose}>Dashboard</MenuItem></Link>
-                 <Link to="/leaderboard"> <MenuItem onClick={this.handleClose}>Scoreboard</MenuItem></Link>
+                 <Link component={RouterLink} to="/" underline="none"><MenuItem onClick={this.handleClose}>Dashboard</MenuItem></Link>
+                 <Link component={RouterLink}  to="/leaderboard" underline="none"> <MenuItem onClick={this.handleClose}>Leaderboard</MenuItem></Link>
+                 <Link component={RouterLink} to="/TeamReport" underline="none"> <MenuItem onClick={this.handleClose}>Team Report</MenuItem></Link>
                   <MenuItem onClick={this.handleClose}>Money List</MenuItem>               
                 </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>

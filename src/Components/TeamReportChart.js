@@ -7,7 +7,8 @@ const options = {
     text: 'My chart'
   },
   series: [{
-    data: [1, 2, 3]
+    data: [1, 2, 3],
+    type: 'column'
   }]
 }
 class Chart extends React.Component {

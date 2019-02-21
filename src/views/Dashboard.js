@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import LeaderboardList from "../Dashboard/LeaderboardList";
-import Chart from "../Dashboard/Chart";
+import LeaderboardList from "../Components/LeaderboardList";
+import Chart from "../Components/TeamReportChart";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
@@ -27,6 +27,7 @@ class Dashboard extends Component {
     
     return (
       <div>
+      <h1>Dashboard</h1>
       <Grid container  direction="row"  justify="center"  alignItems="center" className={classes.root} spacing={16}>
       <Grid item sm >
       <Paper className={classes.paper}  elevation={1}>
@@ -37,7 +38,8 @@ class Dashboard extends Component {
       <Grid container  direction="row"  justify="center"  alignItems="center" className={classes.root} spacing={16}>
       <Grid item >
       <Paper className={classes.paper}  elevation={1}>
-      <LeaderboardList></LeaderboardList>
+      <h2>Top 10 Teams</h2>
+      <LeaderboardList topx="10" ></LeaderboardList>
       </Paper>
       </Grid>  
       </Grid>
