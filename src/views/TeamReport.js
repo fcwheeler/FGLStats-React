@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import TeamReportChart from "../Components/TeamReportChart";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import PlaceGauge from "../Components/PlaceGauge"
@@ -52,12 +51,11 @@ async componentDidMount()
 
     console.log(e.target)
    var team = this.state.teams.find(element => {
-        return element.id === e.target.key
+        return element.id === e.target.value
       })
 
-      console.log(this.state.team)
-      this.setState({team:team})  
-      console.log(this.state.team)
+      
+      this.setState({team:team}) 
 
   }
 
@@ -102,12 +100,13 @@ async componentDidMount()
         Select a Team
           </InputLabel>
       <Select
+            value="Select"
             onChange={this.handleTeamChange}
             id="team-select"
           >
           { this.state.teams ? 
             this.state.teams.map( item => (
-                <MenuItem key={item.id} >{item.name}</MenuItem>
+                <MenuItem value={item.id} key={item.id} >{item.name}</MenuItem>
 
             )
             ):
@@ -115,7 +114,7 @@ async componentDidMount()
 
 
           }
-                 </Select>
+         </Select>
       </Paper>
       </Grid>
       </Grid>

@@ -37,7 +37,6 @@ const styles = theme => ({
   
 });
 
-let teaminfo = [{id:1,name:"Test1",YTDearning:2000 },{id:2,name:"Test2",YTDearning:1000 }]
 
 
 class  LeaderBoardList extends Component {

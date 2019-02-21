@@ -63,7 +63,7 @@ const options =  {
         data:       [5],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                  'black' + '">{y}</span><br/>' +
+                  'black">{y}</span><br/>' + 
                   '<span style="font-size:12px;color:silver">of 85</span></div>'
         }
       }]
