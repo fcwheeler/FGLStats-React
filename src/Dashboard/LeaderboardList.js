@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -32,7 +32,7 @@ const styles = theme => ({
 let teaminfo = [{id:1,name:"Test1",YTDearning:2000 },{id:2,name:"Test2",YTDearning:1000 }]
 
 
-class  LeaderBoard extends Component {
+class  LeaderBoardList extends Component {
 
   constructor(props) {
     super(props);
@@ -58,7 +58,7 @@ class  LeaderBoard extends Component {
     const { classes } = this.props;  
 
     return (
-      <Paper className={classes.root}  elevation={1}>
+      <>
       <Typography variant="h5" component="h3" className={classes.control} > Leaderboard</Typography> 
       <Table className={classes.table}>
         <TableHead>
@@ -78,7 +78,7 @@ class  LeaderBoard extends Component {
           ))}
         </TableBody>
       </Table>
-        </Paper>
+  </>
     );
   }
 
@@ -86,4 +86,4 @@ class  LeaderBoard extends Component {
 
 }
 
-export default withStyles(styles)(LeaderBoard)
+export default withStyles(styles)(LeaderBoardList)

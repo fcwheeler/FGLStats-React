@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import {Link} from 'react-router-dom';
 
 const styles = {
   root: {
@@ -44,6 +45,7 @@ class MenuAppBar extends React.Component {
     const open = Boolean(anchorEl);
 
     return (
+
       <div className={classes.root}>    
         <AppBar position="static">
           <Toolbar>
@@ -64,8 +66,8 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Dashboard</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Scoreboard</MenuItem>
+                 <Link to="/"><MenuItem onClick={this.handleClose}>Dashboard</MenuItem></Link>
+                 <Link to="/leaderboard"> <MenuItem onClick={this.handleClose}>Scoreboard</MenuItem></Link>
                   <MenuItem onClick={this.handleClose}>Money List</MenuItem>               
                 </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>

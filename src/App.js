@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Leaderboard from "./Dashboard/Leaderboard";
-import Chart from "./Dashboard/Chart";
+import Dashboard from "./views/Dashboard"
+import Leaderboard from "./views/Leaderboard"
 import MenuAppBar from "./MenuAppBar";
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import './App.css';
+import {BrowserRouter, Route} from 'react-router-dom';
 
 
 const styles = theme => ({
@@ -24,24 +24,18 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-
-
-    //var leaderboard = getLeaderboard(5);
-
-
     
     return (
-      <div className="App">   
+      <div className="App"> 
+      <BrowserRouter>
+      <div>
       <MenuAppBar title="FGL Stats"></MenuAppBar>
-      <Paper className={classes.paper}>
-      <Grid container  direction="row"  justify="center"  alignItems="center" className={classes.root} spacing={16}>
-      <Grid item sm ><Chart></Chart></Grid>
- 
-      </Grid>
-      <Grid container  direction="row"  justify="center"  alignItems="center" className={classes.root} spacing={16}>
-      <Grid item ><Leaderboard></Leaderboard></Grid>  
-      </Grid>
-      </Paper>
+
+      <Route exact path="/" render={() => <Dashboard></Dashboard> }></Route>
+      <Route exact path="/Leaderboard" render={() => <Leaderboard></Leaderboard> }></Route>
+
+      </div>
+      </BrowserRouter>  
       </div>
     );
   }
@@ -49,5 +43,6 @@ class App extends Component {
 
 
 }
+
 
 export default withStyles(styles)(App)
