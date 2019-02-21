@@ -5,11 +5,11 @@ const cheerioTableparser = require('cheerio-tableparser');
 const leaderboardurl = 'http://localhost:3001/leaderboarddata'; // 'http://www.fglweb.com/fglpool01i.php?ifid=942';
 const survivorurl = 'http://www.fglweb.com/fglrptownerpickdetaili.php?ifid=942';
 
-export let getleaderboard = (res) => { 
+export let getleaderboard = () => { 
   rp(leaderboardurl)
     .then(function(data){      
       var namelist = JSON.parse(data);   
-        res(namelist)
+        return namelist;
       
   
     })

@@ -10,6 +10,9 @@ import TableRow from '@material-ui/core/TableRow';
 
 import { getleaderboard } from "./FGLController.js"
 
+
+const fetch = require('node-fetch');
+
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
@@ -36,18 +39,18 @@ class  LeaderBoardList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {teams: []};
+    this.state = {teams: null};
   }  
-  componentDidMount()
+  async componentDidMount()
   {
-   getleaderboard(function(res){
-    console.log("Before");
-     console.log(this.state)
+  
+   var response = await fetch('http://localhost:3001/leaderboarddata')
+  
+   const json = await response.json();
+  console.log(json)
+    this.setState({ teams: json })    
      
-      this.setState({ teams: teaminfo})
-      console.log("After")
-      console.log(this.state)
-    });
+  
  
 
   }
@@ -69,13 +72,15 @@ class  LeaderBoardList extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.teams.map(row => (
+          {this.state.teams ? this.state.teams.map(row => (
             <TableRow key={row.id}>
-              <TableCell align="right">{row.name}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
               <TableCell align="right">{row.YTDearnings}</TableCell>
 
             </TableRow>
-          ))}
+          )): <TableRow>
+              
+            </TableRow>}
         </TableBody>
       </Table>
   </>
