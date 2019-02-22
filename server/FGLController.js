@@ -1,25 +1,65 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
 const cheerioTableparser = require('cheerio-tableparser');
-const leaderboardurl = 'http://localhost:3001/leaderboarddata'; // 'http://www.fglweb.com/fglpool01i.php?ifid=942';
+const leaderboardurl = 'http://www.fglweb.com/fglpool01i.php?ifid=942';
 const survivorurl = 'http://www.fglweb.com/fglrptownerpickdetaili.php?ifid=942';
 
-export let getleaderboard = () => { 
-  rp(leaderboardurl)
-    .then(function(data){      
-      var namelist = JSON.parse(data);   
-        return namelist;
-      
+exports.getleaderboard = (req, res) => { 
+    rp(leaderboardurl)
+    .then(function(html){
+      //success!
+      var result = $('table', html)[3];
+      var rows = $(result).find("tr")
+      //console.log($('script', html));
+      var namelist = [];
+  
+    
+      cheerioTableparser($);
+  
+      var data = $(result).parsetable(true, true, true);
+  
+      console.log(data[2][2]);
+  
+      for (let i = 2; i < data[0].length; i++) {
+            
+              // each row is represented in each list. Each list is a column
+  
+                  
+                  var rowtext = data[2][i];
+                  //console.log(data[0][i]);
+  
+                  var teamobj = {
+                      id: i,
+                      name : rowtext,
+                      YTDearnings : data[3][i]
+                  };       
+  
+            namelist.push(teamobj);
+                 
+  
+              
+  
+        
+      }
+
+      console.log(namelist.length);
+
+  
+      var jsonresponse =namelist;
+      res.json(jsonresponse);
+      //console.log();
+      //console.log(namelist[1]);
   
     })
     .catch(function(err){
-     return null;
+      console.log(err);
+      res.send(err);
     });
 
 
 };
 
-export let getSurvivors = (req, res) => { 
+exports.getSurvivors = (req, res) => { 
   rp(survivorurl)
   .then(function(html){
     //success!
@@ -35,7 +75,7 @@ export let getSurvivors = (req, res) => {
 
     for (let i = 3; i < 34; i++) {
 
-       if(data[1][i] !== undefined && !data[1][i].includes("(D)"))
+       if(data[1][i] != undefined && !data[1][i].includes("(D)"))
         {
           console.log(parseInt(data[0][i]))
           weeklist.push(data[0][i]);
@@ -43,8 +83,9 @@ export let getSurvivors = (req, res) => {
         }
     }
 
+    var weekindexList = [];
 
-    var initialcount = data[0].filter(function(x){return x ==="1"}).length;
+    var initialcount = data[0].filter(function(x){return x=="1"}).length;
 
     var initalObj = {
       week: 'Initial',
@@ -84,15 +125,16 @@ export let getSurvivors = (req, res) => {
         for (let j = 0; j < data[0].length; j++)
         {
 
-            if(data[0][j] === week)
+            if(data[0][j] == week)
             {
               if(data[2][j].includes("$"))
               {
                 let nameset = false;
                 let namesetIndex = 0;
+                let TeamName = "";
                 while(!nameset)                 
                   {
-                    if(data[0][j-namesetIndex] === "1")
+                    if(data[0][j-namesetIndex] == "1")
                     {
                       nameset = true;
                       let teamname = dataHTML[0][j-namesetIndex-2];

@@ -6,7 +6,7 @@ require('highcharts/modules/solid-gauge')(Highcharts);
 
 
 
-const options =  {
+let options =  {
     chart: {
         type: 'solidgauge'
       },
@@ -63,22 +63,29 @@ const options =  {
         data:       [5],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                  'black">{y}</span><br/>' + 
-                  '<span style="font-size:12px;color:silver">of 85</span></div>'
+                  'black">Rank: {y}</span><br/>' + 
+                  '<span style="font-size:12px;color:silver"></span></div>'
         }
       }]
 
 };
 
+function nth(n){return["st","nd","rd"][((n+90)%100-10)%10-1]||"th"}
+
 class PlaceGauge extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {gaugevalue: this.props.value};
+        this.state = {
+          currentRank: this.props.rank,
+          numOfPlayers: this.props.players,
+        
+        };
       }  
   
     render() { 
-        options.series.data = this.state.gaugevalue
-        
+        options.series[0].data = this.state.currentRank
+        options.yAxis.max = this.state.numOfPlayers
+        console.log(options);
       return (
           <>
         <HighchartsReact
