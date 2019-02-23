@@ -57,7 +57,7 @@ let teaminfo = [
 class WeeklyPicksTable extends Component {
   constructor(props) {
     super(props);
-    this.state = { weeks: teaminfo };
+    this.state = { weeks: null };
   }
 
   async componentWillMount() {
@@ -65,13 +65,21 @@ class WeeklyPicksTable extends Component {
       method: "GET",
       mode: "cors"
     };
+
+    let teamnameEncoded = this.props.teamname.replace(
+      new RegExp(" ", "g"),
+      "_"
+    );
     var response = await fetch(
-      "https://2hjnelw9s4.execute-api.us-east-1.amazonaws.com/Prod/fglstats/weeklypicks",
+      "https://2hjnelw9s4.execute-api.us-east-1.amazonaws.com/Prod/fglstats/weeklypicks/" +
+        teamnameEncoded,
       defaultOptions
     );
 
     const json = await response.json();
-    console.log(json);
+    let weeklist = json[0].picks;
+
+    this.setState({ weeks: weeklist });
   }
 
   render() {
@@ -80,7 +88,6 @@ class WeeklyPicksTable extends Component {
     return (
       <>
         <Typography variant="h5" component="h3" className={classes.control}>
-          {" "}
           Weekly Picks
         </Typography>
         <Table className={classes.table}>
@@ -95,10 +102,10 @@ class WeeklyPicksTable extends Component {
           <TableBody>
             {this.state.weeks ? (
               this.state.weeks.map(row => (
-                <TableRow key={row.id}>
+                <TableRow key={row.week}>
                   <TableCell align="left">{row.week}</TableCell>
                   <TableCell align="left">{row.tournament}</TableCell>
-                  <TableCell align="left">{row.golfer}</TableCell>
+                  <TableCell align="left">{row.player}</TableCell>
                   <TableCell align="center">{row.earnings}</TableCell>
                 </TableRow>
               ))

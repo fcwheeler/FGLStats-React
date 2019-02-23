@@ -38,7 +38,6 @@ class TeamReport extends Component {
       defaultOptions
     );
     const json = await response.json();
-    console.log(json);
 
     if (this.state.teamid) {
       var teamid = this.state.teamid;
@@ -53,7 +52,6 @@ class TeamReport extends Component {
   }
 
   handleTeamChange = e => {
-    console.log(e.target);
     var team = this.state.teams.find(element => {
       return element.id === e.target.value;
     });
@@ -104,7 +102,7 @@ class TeamReport extends Component {
                 </Grid>
                 <Grid item xs={6}>
                   <Paper className={classes.root} elevation={1}>
-                    <WeeklyPicksTable />
+                    <WeeklyPicksTable teamname={this.state.team.name} />
                   </Paper>
                 </Grid>
               </Grid>
