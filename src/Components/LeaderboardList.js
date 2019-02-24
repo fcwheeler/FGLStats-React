@@ -10,7 +10,11 @@ import TableRow from "@material-ui/core/TableRow";
 import { Link } from "react-router-dom";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
 
+import { connect } from "react-redux";
+import { fetchLeaderboard } from "../actions/leaderboardAction";
+
 import "react-overlay-loader/styles.css";
+import { Button } from "@material-ui/core";
 
 const fetch = require("node-fetch");
 
@@ -36,38 +40,16 @@ const styles = theme => ({
 });
 
 class LeaderBoardList extends Component {
-  constructor(props) {
-    super(props);
-    var topx = this.props.topx ? this.props.topx : null;
-    this.state = { teams: null, filteredTeams: null, topx: topx };
-  }
-  async componentWillMount() {
-    let defaultOptions = {
-      method: "GET",
-      mode: "cors"
-    };
-    var response = await fetch(
-      "https://2hjnelw9s4.execute-api.us-east-1.amazonaws.com/Prod/fglstats",
-      defaultOptions
-    );
-
-    const json = await response.json();
-    console.log(json);
-    if (this.state.topx) {
-      var topx = Math.min(json.length, this.state.topx);
-      this.setState({ teams: json, filteredTeams: json, topx: topx });
-    } else {
-      this.setState({ teams: json, filteredTeams: json, topx: json.length });
-    }
-  }
-
   handle_Search = e => {
-    var filteredteams = this.state.teams.filter(item =>
-      item.name.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    this.setState({ filteredTeams: filteredteams });
+    var filteredteams = this.props
+      .leaderboard()
+      .filter(item =>
+        item.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
     console.log(filteredteams);
   };
+
+  componentDidMount() {}
 
   render() {
     const { classes } = this.props;
@@ -89,31 +71,32 @@ class LeaderBoardList extends Component {
           <TableHead>
             <TableRow>
               <TableCell>Team</TableCell>
+              <TableCell>Owner</TableCell>
               <TableCell align="right">YTD Earnings</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.filteredTeams ? (
-              this.state.filteredTeams
-                .slice(0, this.state.topx - 1)
-                .map(row => (
-                  <TableRow key={row.id}>
-                    <TableCell align="left">
-                      <Typography>
-                        <Link
-                          underline="none"
-                          color="inherit"
-                          to={"/TeamReport/" + row.id}
-                        >
-                          {row.name}
-                        </Link>
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">{row.YTDearnings}</TableCell>
-                  </TableRow>
-                ))
+            {this.props.leaderboard.teams &&
+            this.props.leaderboard.teams.length > 0 ? (
+              this.props.leaderboard.teams.slice(0, 10 - 1).map(row => (
+                <TableRow key={row.id}>
+                  <TableCell align="left">
+                    <Typography>
+                      <Link
+                        underline="none"
+                        color="inherit"
+                        to={"/TeamReport/" + row.id}
+                      >
+                        {row.name}
+                      </Link>
+                    </Typography>
+                  </TableCell>
+                  <TableCell> {row.owner}</TableCell>
+                  <TableCell align="right">{row.YTDearnings}</TableCell>
+                </TableRow>
+              ))
             ) : (
-              <Loader loading />
+              <Loader fullpage />
             )}
           </TableBody>
         </Table>
@@ -122,4 +105,12 @@ class LeaderBoardList extends Component {
   }
 }
 
-export default withStyles(styles)(LeaderBoardList);
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  leaderboard: () => dispatch(fetchLeaderboard())
+});
+
+export default withStyles(styles)(connect(mapStateToProps)(LeaderBoardList));
