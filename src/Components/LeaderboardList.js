@@ -12,6 +12,7 @@ import { LoadingOverlay, Loader } from "react-overlay-loader";
 
 import { connect } from "react-redux";
 import { fetchLeaderboard } from "../actions/leaderboardAction";
+import { selectTeam, clearTeam } from "../actions/selectedTeamAction";
 
 import "react-overlay-loader/styles.css";
 import { Button } from "@material-ui/core";
@@ -110,7 +111,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  leaderboard: () => dispatch(fetchLeaderboard())
+  fetchleaderboard: () => dispatch(fetchLeaderboard()),
+  selectTeam: team => dispatch(selectTeam(team)),
+  clearTeam: () => dispatch(clearTeam())
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(LeaderBoardList));
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(LeaderBoardList)
+);

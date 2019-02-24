@@ -6,9 +6,12 @@ import PlaceGauge from "../Components/PlaceGauge";
 import WeekHistoryChart from "../Components/WeekHistoryChart";
 import WeeklyPicksTable from "../Components/WeeklyPicksTable";
 import Select from "@material-ui/core/Select";
-import { MenuItem } from "@material-ui/core";
+import { MenuItem, Link } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
+import { connect } from "react-redux";
+
+import { selectTeam, clearTeam } from "../actions/selectedTeamAction";
 
 import "react-overlay-loader/styles.css";
 
@@ -21,42 +24,22 @@ class TeamReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      teams: null,
-      teamid: this.props.teamid || null,
-      team: null,
       loading: true
     };
   }
 
-  async componentWillMount() {
-    let defaultOptions = {
-      method: "GET",
-      mode: "cors"
-    };
-    var response = await fetch(
-      "https://2hjnelw9s4.execute-api.us-east-1.amazonaws.com/Prod/fglstats",
-      defaultOptions
-    );
-    const json = await response.json();
-
-    if (this.state.teamid) {
-      var teamid = this.state.teamid;
-      var team = json.find(function(element) {
-        return element.id.toString() === teamid;
-      });
-
-      this.setState({ teams: json, team: team, loading: false });
-    } else {
-      this.setState({ teams: json, loading: false });
+  componentWillMount() {
+    if (this.props.leaderboard.teams) {
+      this.setState({ loading: false });
     }
   }
 
   handleTeamChange = e => {
-    var team = this.state.teams.find(element => {
-      return element.id === e.target.value;
+    var team = this.props.leaderboard.teams.find(element => {
+      return element.name === e.target.value;
     });
 
-    this.setState({ team: team });
+    this.props.selectTeam(team);
   };
 
   render() {
@@ -66,7 +49,7 @@ class TeamReport extends Component {
       <div>
         <h1>Team Report</h1>
 
-        {this.state.team ? (
+        {this.props.selectedteam ? (
           <>
             <Grid
               container
@@ -77,8 +60,10 @@ class TeamReport extends Component {
               spacing={16}
             >
               <Grid item lg>
-                <h2>{this.state.team.name}</h2>
+                <h2>{this.props.selectedteam.name}</h2>
+                <Link to="/TeamReport">Change Team</Link>
               </Grid>
+
               <Grid
                 container
                 direction="row"
@@ -90,19 +75,19 @@ class TeamReport extends Component {
                 <Grid item xs={3}>
                   <Paper className={classes.root} elevation={1}>
                     <PlaceGauge
-                      rank={[this.state.team.id]}
-                      players={this.state.teams.length}
+                      rank={[this.props.selectedteam.id]}
+                      players={this.props.leaderboard.teams.length}
                     />
                   </Paper>
                 </Grid>
                 <Grid item xs={6}>
                   <Paper className={classes.root} elevation={1}>
-                    <WeekHistoryChart />
+                    <WeekHistoryChart teamname={this.props.selectedteam.name} />
                   </Paper>
                 </Grid>
                 <Grid item xs={6}>
                   <Paper className={classes.root} elevation={1}>
-                    <WeeklyPicksTable teamname={this.state.team.name} />
+                    <WeeklyPicksTable teamname={this.props.selectedteam.name} />
                   </Paper>
                 </Grid>
               </Grid>
@@ -125,17 +110,27 @@ class TeamReport extends Component {
                   onChange={this.handleTeamChange}
                   id="team-select"
                 >
-                  {this.state.teams ? (
-                    this.state.teams.map(item => (
-                      <MenuItem value={item.id} key={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    ))
+                  {this.props.leaderboard.teams ? (
+                    this.props.leaderboard.teams
+                      .slice()
+                      .sort((a, b) => {
+                        if (a.name < b.name) {
+                          return -1;
+                        }
+                        if (a.name > b.name) {
+                          return 1;
+                        }
+                        return 0;
+                      })
+                      .map(item => (
+                        <MenuItem value={item.name} key={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))
                   ) : (
-                    <></>
+                    <Loader fullPage loading />
                   )}
                 </Select>
-                <Loader fullPage loading={this.state.loading} />
               </Paper>
             </Grid>
           </Grid>
@@ -145,4 +140,18 @@ class TeamReport extends Component {
   }
 }
 
-export default withStyles(styles)(TeamReport);
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  selectTeam: team => dispatch(selectTeam(team)),
+  clearTeam: () => dispatch(clearTeam())
+});
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TeamReport)
+);

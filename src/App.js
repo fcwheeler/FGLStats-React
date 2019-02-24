@@ -9,6 +9,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { fetchLeaderboard } from "./actions/leaderboardAction";
+import { fetchWeeklyPicks } from "./actions/weeklypicksAction";
 
 const styles = theme => ({
   root: {
@@ -22,7 +23,8 @@ const styles = theme => ({
 });
 class App extends Component {
   componentWillMount() {
-    this.props.leaderboard();
+    this.props.fetchleaderboard();
+    this.props.fetchweeklyPicks();
   }
 
   render() {
@@ -50,11 +52,13 @@ const TeamReportID = ({ match }) => (
 );
 
 const mapStateToProps = state => ({
-  leaderboard: state.leaderboardReducer
+  leaderboard: state.leaderboardReducer,
+  weeklypicks: state.weeklypicksReducer
 });
 
 const mapDispatchToProps = dispatch => ({
-  leaderboard: () => dispatch(fetchLeaderboard())
+  fetchleaderboard: () => dispatch(fetchLeaderboard()),
+  fetchweeklyPicks: () => dispatch(fetchWeeklyPicks())
 });
 
 export default withStyles(styles)(

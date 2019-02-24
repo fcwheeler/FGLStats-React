@@ -24,15 +24,10 @@ const options = {
   },
   xAxis: {
     min: 1,
-    max: 15,
+    max: 30,
     label: "Week"
   },
-  series: [
-    {
-      data: [1, 5, 15, 62, 62, 55],
-      name: "Weekly Rank"
-    }
-  ],
+  series: [],
   credits: {
     enabled: false
   }
@@ -40,9 +35,42 @@ const options = {
 
 class WeekHistoryChart extends React.Component {
   render() {
+    if (this.props.weeklypicks && this.props.weeklypicks.teams) {
+      let teamname = this.props.teamname;
+
+      console.log("props " + this.props);
+      console.log("props.teamname: " + teamname);
+      console.log(
+        ".weeklypicks.teams.formattedteamname: " +
+          this.props.weeklypicks.teams[0].formattedteamname
+      );
+      let team = this.props.weeklypicks.teams.find(item => {
+        return teamname.includes(item.formattedteamname);
+      });
+
+      if (!team) {
+        console.log("No item with formattedteamname equaling " + teamname);
+      }
+
+      let weeklyrank = team.ranksummary.map(item => {
+        return [item.week, item.rank];
+      });
+      options.series[0] = {
+        data: weeklyrank,
+        type: "line",
+        name: "Weekly Rank"
+      };
+      console.log(options);
+    }
+
     return (
       <>
-        <HighchartsReact highcharts={Highcharts} options={options} />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          allowChartUpdate={true}
+          updateArgs={[true, true, true]}
+        />
       </>
     );
   }

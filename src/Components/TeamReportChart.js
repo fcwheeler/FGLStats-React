@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 const options = {
   title: {
-    text: "My chart"
+    text: "Top 10 Summary"
   },
   plotOptions: {
     series: {
