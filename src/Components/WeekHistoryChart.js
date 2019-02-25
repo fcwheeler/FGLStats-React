@@ -35,21 +35,17 @@ const options = {
 
 class WeekHistoryChart extends React.Component {
   render() {
-    if (this.props.weeklypicks && this.props.weeklypicks.teams) {
-      let teamname = this.props.teamname;
-
-      console.log("props " + this.props);
-      console.log("props.teamname: " + teamname);
-      console.log(
-        ".weeklypicks.teams.formattedteamname: " +
-          this.props.weeklypicks.teams[0].formattedteamname
-      );
+    if (this.props.selectedteam.selectedteam == null) {
+    } else if (this.props.weeklypicks && this.props.weeklypicks.teams) {
+      let selectedteamname = this.props.selectedteam.selectedteam.name;
       let team = this.props.weeklypicks.teams.find(item => {
-        return teamname.includes(item.formattedteamname);
+        return selectedteamname == item.formattedteamname;
       });
 
       if (!team) {
-        console.log("No item with formattedteamname equaling " + teamname);
+        console.log(
+          "No item with formattedteamname equaling " + selectedteamname
+        );
       }
 
       let weeklyrank = team.ranksummary.map(item => {

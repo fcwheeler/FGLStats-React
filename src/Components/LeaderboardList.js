@@ -41,6 +41,9 @@ const styles = theme => ({
 });
 
 class LeaderBoardList extends Component {
+  constructor(props) {
+    super(props);
+  }
   handle_Search = e => {
     var filteredteams = this.props
       .leaderboard()
@@ -51,6 +54,11 @@ class LeaderBoardList extends Component {
   };
 
   componentDidMount() {}
+
+  handleLinkClick(e) {
+    console.log(e.target);
+    this.props.selectTeam(e.target.value);
+  }
 
   render() {
     const { classes } = this.props;
@@ -84,9 +92,9 @@ class LeaderBoardList extends Component {
                   <TableCell align="left">
                     <Typography>
                       <Link
-                        underline="none"
-                        color="inherit"
-                        to={"/TeamReport/" + row.id}
+                        value={row.name}
+                        onClick={this.handleLinkClick}
+                        to="/TeamReport"
                       >
                         {row.name}
                       </Link>

@@ -18,7 +18,7 @@ class Chart extends React.Component {
   render() {
     if (this.props.leaderboard && this.props.leaderboard.teams) {
       let topteams = this.props.leaderboard.teams.map(item => {
-        let earnings = parseFloat(item.YTDearnings.replace(/[$,]+/g, ""));
+        let earnings = item.YTDearnings;
         return [item.name, earnings];
       });
       options.series[0] = {

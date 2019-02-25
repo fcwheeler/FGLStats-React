@@ -8,6 +8,7 @@ import WeeklyPicksTable from "../Components/WeeklyPicksTable";
 import Select from "@material-ui/core/Select";
 import { MenuItem, Link } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
+import Button from "@material-ui/core/Button";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
 import { connect } from "react-redux";
 
@@ -18,6 +19,9 @@ import "react-overlay-loader/styles.css";
 const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  button: {
+    margin: theme.spacing.unit
   }
 });
 class TeamReport extends Component {
@@ -49,7 +53,7 @@ class TeamReport extends Component {
       <div>
         <h1>Team Report</h1>
 
-        {this.props.selectedteam ? (
+        {this.props.selectedteam.selectedteam ? (
           <>
             <Grid
               container
@@ -60,10 +64,19 @@ class TeamReport extends Component {
               spacing={16}
             >
               <Grid item lg>
-                <h2>{this.props.selectedteam.name}</h2>
-                <Link to="/TeamReport">Change Team</Link>
+                <h2>{this.props.selectedteam.selectedteam.name}</h2>
               </Grid>
-
+              <Grid container justify="center">
+                <Button
+                  component={Link}
+                  to="/SelectTeam"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Change Team
+                </Button>
+              </Grid>
               <Grid
                 container
                 direction="row"
@@ -74,20 +87,17 @@ class TeamReport extends Component {
               >
                 <Grid item xs={3}>
                   <Paper className={classes.root} elevation={1}>
-                    <PlaceGauge
-                      rank={[this.props.selectedteam.id]}
-                      players={this.props.leaderboard.teams.length}
-                    />
+                    <PlaceGauge />
                   </Paper>
                 </Grid>
                 <Grid item xs={6}>
                   <Paper className={classes.root} elevation={1}>
-                    <WeekHistoryChart teamname={this.props.selectedteam.name} />
+                    <WeekHistoryChart />
                   </Paper>
                 </Grid>
                 <Grid item xs={6}>
                   <Paper className={classes.root} elevation={1}>
-                    <WeeklyPicksTable teamname={this.props.selectedteam.name} />
+                    <WeeklyPicksTable />
                   </Paper>
                 </Grid>
               </Grid>

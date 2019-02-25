@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-
+import { connect } from "react-redux";
 const fetch = require("node-fetch");
 
 const styles = theme => ({
@@ -55,33 +55,6 @@ let teaminfo = [
 ];
 
 class WeeklyPicksTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { weeks: null };
-  }
-
-  async componentWillMount() {
-    let defaultOptions = {
-      method: "GET",
-      mode: "cors"
-    };
-
-    let teamnameEncoded = this.props.teamname.replace(
-      new RegExp(" ", "g"),
-      "_"
-    );
-    var response = await fetch(
-      "https://2hjnelw9s4.execute-api.us-east-1.amazonaws.com/Prod/fglstats/weeklypicks/" +
-        teamnameEncoded,
-      defaultOptions
-    );
-
-    const json = await response.json();
-    let weeklist = json[0].picks;
-
-    this.setState({ weeks: weeklist });
-  }
-
   render() {
     const { classes } = this.props;
 
@@ -100,15 +73,22 @@ class WeeklyPicksTable extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.weeks ? (
-              this.state.weeks.map(row => (
-                <TableRow key={row.week}>
-                  <TableCell align="left">{row.week}</TableCell>
-                  <TableCell align="left">{row.tournament}</TableCell>
-                  <TableCell align="left">{row.player}</TableCell>
-                  <TableCell align="center">{row.earnings}</TableCell>
-                </TableRow>
-              ))
+            {this.props.weeklypicks.teams &&
+            this.props.selectedteam.selectedteam ? (
+              this.props.weeklypicks.teams
+                .find(team => {
+                  return team.formattedteamname.includes(
+                    this.props.selectedteam.selectedteam.name
+                  );
+                })
+                .picks.map(row => (
+                  <TableRow key={row.week}>
+                    <TableCell align="left">{row.week}</TableCell>
+                    <TableCell align="left">{row.tournament}</TableCell>
+                    <TableCell align="left">{row.player}</TableCell>
+                    <TableCell align="center">{row.earnings}</TableCell>
+                  </TableRow>
+                ))
             ) : (
               <TableRow />
             )}
@@ -119,4 +99,8 @@ class WeeklyPicksTable extends Component {
   }
 }
 
-export default withStyles(styles)(WeeklyPicksTable);
+const mapStateToProps = state => ({
+  ...state
+});
+
+export default withStyles(styles)(connect(mapStateToProps)(WeeklyPicksTable));
