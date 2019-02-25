@@ -2,7 +2,7 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { connect } from "react-redux";
-
+import { LoadingOverlay, Loader } from "react-overlay-loader";
 require("highcharts-more")(Highcharts);
 require("highcharts/modules/solid-gauge")(Highcharts);
 
@@ -19,13 +19,18 @@ const options = {
   yAxis: {
     reversed: true,
     min: 1,
-    max: 85,
+    max: 98,
     label: "Rank"
   },
   xAxis: {
     min: 1,
     max: 30,
     label: "Week"
+  },
+  plotOptions: {
+    series: {
+      pointStart: 1
+    }
   },
   series: [],
   credits: {
@@ -61,12 +66,18 @@ class WeekHistoryChart extends React.Component {
 
     return (
       <>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-          allowChartUpdate={true}
-          updateArgs={[true, true, true]}
-        />
+        {this.props.selectedteam.selectedteam != null &&
+        this.props.weeklypicks &&
+        this.props.weeklypicks.teams ? (
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+            allowChartUpdate={true}
+            updateArgs={[true, true, true]}
+          />
+        ) : (
+          <Loader fullpage loading />
+        )}
       </>
     );
   }

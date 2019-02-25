@@ -7,7 +7,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
 
 import { connect } from "react-redux";
@@ -41,6 +41,13 @@ const styles = theme => ({
 });
 
 class LeaderBoardList extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLinkClick = this.handleLinkClick.bind(this);
+
+    this.state = { redirect: false };
+  }
+
   handle_Search = e => {
     var filteredteams = this.props
       .leaderboard()
@@ -54,61 +61,63 @@ class LeaderBoardList extends Component {
 
   handleLinkClick(e) {
     var team = this.props.leaderboard.teams.find(element => {
-      return element.name === e.target.value;
+      return element.name === e.target.innerText;
     });
-
+    console.log(e.target.innerText);
     this.props.selectTeam(team);
+    this.setState({ redirect: true });
   }
 
   render() {
     const { classes } = this.props;
 
+    if (this.state.redirect) {
+    }
     return (
       <>
-        <Typography variant="h5" component="h3" className={classes.control}>
-          {" "}
-          Leaderboard
-        </Typography>
-        <TextField
-          id="search"
-          type="text"
-          label="Search"
-          onChange={this.handle_Search}
-          className={classes.textField}
-        />
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Team</TableCell>
-              <TableCell>Owner</TableCell>
-              <TableCell align="right">YTD Earnings</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.props.leaderboard.teams &&
-            this.props.leaderboard.teams.length > 0 ? (
-              this.props.leaderboard.teams.slice(0, 10 - 1).map(row => (
-                <TableRow key={row.id}>
-                  <TableCell align="left">
-                    <Typography>
-                      <Link
-                        value={row.name}
-                        onClick={this.handleLinkClick}
-                        to="/TeamReport"
-                      >
-                        {row.name}
-                      </Link>
-                    </Typography>
-                  </TableCell>
-                  <TableCell> {row.owner}</TableCell>
-                  <TableCell align="right">{row.YTDearnings}</TableCell>
+        {this.state.redirect ? (
+          <Redirect to="/TeamReport" />
+        ) : (
+          <>
+            <Typography variant="h5" component="h3" className={classes.control}>
+              Leaderboard
+            </Typography>
+            <TextField
+              id="search"
+              type="text"
+              label="Search"
+              onChange={this.handle_Search}
+              className={classes.textField}
+            />
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Team</TableCell>
+                  <TableCell>Owner</TableCell>
+                  <TableCell align="right">YTD Earnings</TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <Loader fullpage />
-            )}
-          </TableBody>
-        </Table>
+              </TableHead>
+              <TableBody>
+                {this.props.leaderboard.teams &&
+                this.props.leaderboard.teams.length > 0 ? (
+                  this.props.leaderboard.teams.slice(0, 10 - 1).map(row => (
+                    <TableRow key={row.id}>
+                      <TableCell align="left">
+                        <Button value={row.name} onClick={this.handleLinkClick}>
+                          {row.name}
+                        </Button>
+                      </TableCell>
+                      <TableCell> {row.owner}</TableCell>
+                      <TableCell align="right">{row.YTDearnings}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <Loader fullpage />
+                )}
+              </TableBody>
+            </Table>
+          </>
+        )}
       </>
     );
   }

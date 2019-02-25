@@ -6,4 +6,4 @@ The data is currently scrapped from the FGL website, via AWS Lambda functions.
 
 ToDo: Implement redux for state management and possibly mongoDB.
 z
-Production site is <a href-"http://fglstats.com">FGLStats.com</a>
+Production site is http://fglstats.com"

@@ -18,7 +18,7 @@ const options = {
 };
 class Chart extends React.Component {
   render() {
-    Highcharts.setOptions(theme);
+    // Highcharts.setOptions(theme);
     if (this.props.leaderboard && this.props.leaderboard.teams) {
       var colors = Highcharts.getOptions().colors;
 

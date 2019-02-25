@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import PlaceGauge from "../Components/PlaceGauge";
 import WeekHistoryChart from "../Components/WeekHistoryChart";
 import WeeklyPicksTable from "../Components/WeeklyPicksTable";
+import PickBreakdownChart from "../Components/PickBreakdownChart";
 import Select from "@material-ui/core/Select";
 import { MenuItem, Link } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -103,6 +104,11 @@ class TeamReport extends Component {
                     <WeeklyPicksTable />
                   </Paper>
                 </Grid>
+                <Grid item xs={8}>
+                  <Paper className={classes.root} elevation={1}>
+                    <PickBreakdownChart />
+                  </Paper>
+                </Grid>
               </Grid>
             </Grid>
           </>
@@ -117,34 +123,44 @@ class TeamReport extends Component {
           >
             <Grid item xs={3}>
               <Paper className={classes.root} elevation={1}>
-                <InputLabel htmlFor="team-select">Select Team</InputLabel>
-                <Select
-                  onChange={this.handleTeamChange}
-                  inputProps={{
-                    id: "team-select"
-                  }}
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.root}
+                  spacing={16}
                 >
-                  {this.props.leaderboard.teams ? (
-                    this.props.leaderboard.teams
-                      .slice()
-                      .sort((a, b) => {
-                        if (a.name < b.name) {
-                          return -1;
-                        }
-                        if (a.name > b.name) {
-                          return 1;
-                        }
-                        return 0;
-                      })
-                      .map(item => (
-                        <MenuItem value={item.name} key={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))
-                  ) : (
-                    <Loader fullPage loading />
-                  )}
-                </Select>
+                  <InputLabel htmlFor="team-select">Select Team</InputLabel>
+                  <Select
+                    onChange={this.handleTeamChange}
+                    value="Placeholder"
+                    inputProps={{
+                      id: "team-select"
+                    }}
+                  >
+                    {this.props.leaderboard.teams ? (
+                      this.props.leaderboard.teams
+                        .slice()
+                        .sort((a, b) => {
+                          if (a.name < b.name) {
+                            return -1;
+                          }
+                          if (a.name > b.name) {
+                            return 1;
+                          }
+                          return 0;
+                        })
+                        .map(item => (
+                          <MenuItem value={item.name} key={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        ))
+                    ) : (
+                      <Loader fullPage loading />
+                    )}
+                  </Select>
+                </Grid>
               </Paper>
             </Grid>
           </Grid>

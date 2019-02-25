@@ -33,7 +33,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <BrowserRouter>
+        <BrowserRouter forceRefresh={true}>
           <div>
             <MenuAppBar title="FGL Stats" />
 
