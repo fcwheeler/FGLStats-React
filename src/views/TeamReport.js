@@ -12,19 +12,38 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
 import { connect } from "react-redux";
-
+import SelectTeam from "../Components/SelectTeam";
 import { selectTeam } from "../actions/selectedTeamAction";
-
+import Modal from "@material-ui/core/Modal";
 import "react-overlay-loader/styles.css";
-
+import Typography from "@material-ui/core/Typography";
 const styles = theme => ({
   root: {
     flexGrow: 1
   },
   button: {
     margin: theme.spacing.unit
+  },
+  paper: {
+    position: "absolute",
+    width: theme.spacing.unit * 50,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: "none"
   }
 });
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  };
+}
 class TeamReport extends Component {
   constructor(props) {
     super(props);
@@ -113,62 +132,14 @@ class TeamReport extends Component {
             </Grid>
           </>
         ) : (
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            className={classes.root}
-            spacing={16}
-          >
-            <Grid item xs={3}>
-              <Paper className={classes.root} elevation={1}>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.root}
-                  spacing={16}
-                >
-                  <InputLabel htmlFor="team-select">Select Team</InputLabel>
-                  <Select
-                    onChange={this.handleTeamChange}
-                    value="Placeholder"
-                    inputProps={{
-                      id: "team-select"
-                    }}
-                  >
-                    {this.props.leaderboard.teams ? (
-                      this.props.leaderboard.teams
-                        .slice()
-                        .sort((a, b) => {
-                          if (a.name < b.name) {
-                            return -1;
-                          }
-                          if (a.name > b.name) {
-                            return 1;
-                          }
-                          return 0;
-                        })
-                        .map(item => (
-                          <MenuItem value={item.name} key={item.id}>
-                            {(item.name.length > 15
-                              ? item.name.substring(0, 15) + "..."
-                              : item.name) +
-                              " (" +
-                              item.owner +
-                              ")"}
-                          </MenuItem>
-                        ))
-                    ) : (
-                      <Loader fullPage loading />
-                    )}
-                  </Select>
-                </Grid>
-              </Paper>
-            </Grid>
-          </Grid>
+          <Modal open={true}>
+            <Paper className={classes.paper} style={getModalStyle()}>
+              <Typography variant="h6" id="modal-title">
+                Select a Team
+              </Typography>
+              <SelectTeam />
+            </Paper>
+          </Modal>
         )}
       </div>
     );
