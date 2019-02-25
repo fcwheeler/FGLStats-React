@@ -1,4 +1,4 @@
-import { SELECT_TEAM, CLEAR_TEAM } from "../actions/types";
+import { SELECT_TEAM } from "../actions/types";
 
 const initialState = { selectedteam: null };
 
@@ -10,11 +10,7 @@ export default (state = initialState, action) => {
         ...state,
         selectedteam: action.payload
       };
-    case CLEAR_TEAM:
-      return {
-        ...state,
-        selectedteam: null
-      };
+
     default:
       return state;
   }

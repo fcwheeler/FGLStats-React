@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
 import { connect } from "react-redux";
 
-import { selectTeam, clearTeam } from "../actions/selectedTeamAction";
+import { selectTeam } from "../actions/selectedTeamAction";
 
 import "react-overlay-loader/styles.css";
 
@@ -46,6 +46,10 @@ class TeamReport extends Component {
     this.props.selectTeam(team);
   };
 
+  handleclearteam = () => {
+    this.props.selectTeam(null);
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -68,11 +72,10 @@ class TeamReport extends Component {
               </Grid>
               <Grid container justify="center">
                 <Button
-                  component={Link}
-                  to="/SelectTeam"
                   variant="contained"
                   color="primary"
                   className={classes.button}
+                  onClick={this.handleclearteam}
                 >
                   Change Team
                 </Button>
@@ -155,8 +158,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  selectTeam: team => dispatch(selectTeam(team)),
-  clearTeam: () => dispatch(clearTeam())
+  selectTeam: team => dispatch(selectTeam(team))
 });
 
 export default withStyles(styles)(

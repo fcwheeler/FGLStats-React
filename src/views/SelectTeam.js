@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
 import compose from "recompose/compose";
 
-import { selectTeam, clearTeam } from "../actions/selectedTeamAction";
+import { selectTeam } from "../actions/selectedTeamAction";
 
 import "react-overlay-loader/styles.css";
 
@@ -84,8 +84,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  selectTeam: team => dispatch(selectTeam(team)),
-  clearTeam: () => dispatch(clearTeam())
+  selectTeam: team => dispatch(selectTeam(team))
 });
 
 export default compose(

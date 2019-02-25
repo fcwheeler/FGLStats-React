@@ -12,7 +12,7 @@ import { LoadingOverlay, Loader } from "react-overlay-loader";
 
 import { connect } from "react-redux";
 import { fetchLeaderboard } from "../actions/leaderboardAction";
-import { selectTeam, clearTeam } from "../actions/selectedTeamAction";
+import { selectTeam } from "../actions/selectedTeamAction";
 
 import "react-overlay-loader/styles.css";
 import { Button } from "@material-ui/core";
@@ -41,9 +41,6 @@ const styles = theme => ({
 });
 
 class LeaderBoardList extends Component {
-  constructor(props) {
-    super(props);
-  }
   handle_Search = e => {
     var filteredteams = this.props
       .leaderboard()
@@ -56,8 +53,11 @@ class LeaderBoardList extends Component {
   componentDidMount() {}
 
   handleLinkClick(e) {
-    console.log(e.target);
-    this.props.selectTeam(e.target.value);
+    var team = this.props.leaderboard.teams.find(element => {
+      return element.name === e.target.value;
+    });
+
+    this.props.selectTeam(team);
   }
 
   render() {
@@ -120,8 +120,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchleaderboard: () => dispatch(fetchLeaderboard()),
-  selectTeam: team => dispatch(selectTeam(team)),
-  clearTeam: () => dispatch(clearTeam())
+  selectTeam: team => dispatch(selectTeam(team))
 });
 
 export default withStyles(styles)(
