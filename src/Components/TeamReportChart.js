@@ -3,6 +3,8 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { connect } from "react-redux";
 
+const theme = require("./highchartTheme_538.json");
+
 const options = {
   title: {
     text: "Top 10 Summary"
@@ -16,10 +18,17 @@ const options = {
 };
 class Chart extends React.Component {
   render() {
+    Highcharts.setOptions(theme);
     if (this.props.leaderboard && this.props.leaderboard.teams) {
-      let topteams = this.props.leaderboard.teams.map(item => {
+      var colors = Highcharts.getOptions().colors;
+
+      let topteams = this.props.leaderboard.teams.map((item, index) => {
         let earnings = item.YTDearnings;
-        return [item.name, earnings];
+        return {
+          y: earnings,
+          name: item.name,
+          color: colors[index]
+        };
       });
       options.series[0] = {
         data: topteams.slice(0, 10),

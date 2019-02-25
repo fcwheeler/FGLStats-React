@@ -117,11 +117,12 @@ class TeamReport extends Component {
           >
             <Grid item xs={3}>
               <Paper className={classes.root} elevation={1}>
-                <InputLabel htmlFor="team-select">Select a Team</InputLabel>
+                <InputLabel htmlFor="team-select">Select Team</InputLabel>
                 <Select
-                  value="Select"
                   onChange={this.handleTeamChange}
-                  id="team-select"
+                  inputProps={{
+                    id: "team-select"
+                  }}
                 >
                   {this.props.leaderboard.teams ? (
                     this.props.leaderboard.teams

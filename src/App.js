@@ -8,10 +8,11 @@ import MenuAppBar from "./Components/MenuAppBar";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
-
+import Highcharts from "highcharts";
 import { fetchLeaderboard } from "./actions/leaderboardAction";
 import { fetchWeeklyPicks } from "./actions/weeklypicksAction";
 
+const theme = require("./Components/highchartTheme_538.json");
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -24,6 +25,7 @@ const styles = theme => ({
 });
 class App extends Component {
   componentWillMount() {
+    Highcharts.setOptions(theme);
     this.props.fetchleaderboard();
     this.props.fetchweeklyPicks();
   }
