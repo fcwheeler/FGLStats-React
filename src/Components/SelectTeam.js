@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Select from "@material-ui/core/Select";
 import { MenuItem } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
 import { selectTeam } from "../actions/selectedTeamAction";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -27,14 +28,10 @@ class SelectTeam extends Component {
   render() {
     return (
       <div>
-        <Select
-          displayEmpty
-          onChange={this.handleTeamChange}
-          value="Placeholder"
-          inputProps={{
-            value: "Select"
-          }}
-        >
+        <Select value="select" onChange={this.handleTeamChange}>
+          <MenuItem value="select" selected>
+            Select
+          </MenuItem>
           {this.props.leaderboard.teams ? (
             this.props.leaderboard.teams
               .slice()
@@ -58,7 +55,7 @@ class SelectTeam extends Component {
                 </MenuItem>
               ))
           ) : (
-            <MenuItem value="" />
+            <> </>
           )}
         </Select>
       </div>
