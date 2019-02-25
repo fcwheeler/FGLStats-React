@@ -67,7 +67,7 @@ class WeeklyPicksTable extends Component {
           <TableHead>
             <TableRow>
               <TableCell align="left">Week</TableCell>
-              <TableCell align="left">Tournament</TableCell>
+              <TableCell align="left">Tournament(Winner)</TableCell>
               <TableCell align="left">Golfer</TableCell>
               <TableCell align="center">Earnings</TableCell>
             </TableRow>

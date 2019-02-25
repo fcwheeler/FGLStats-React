@@ -62,13 +62,13 @@ class TeamReport extends Component {
           <>
             <Grid
               container
-              direction="row"
+              direction="column"
               justify="center"
               alignItems="center"
               className={classes.root}
               spacing={16}
             >
-              <Grid item lg>
+              <Grid item xs={12}>
                 <h2>{this.props.selectedteam.selectedteam.name}</h2>
               </Grid>
               <Grid container justify="center">
@@ -153,7 +153,12 @@ class TeamReport extends Component {
                         })
                         .map(item => (
                           <MenuItem value={item.name} key={item.id}>
-                            {item.name}
+                            {(item.name.length > 15
+                              ? item.name.substring(0, 15) + "..."
+                              : item.name) +
+                              " (" +
+                              item.owner +
+                              ")"}
                           </MenuItem>
                         ))
                     ) : (

@@ -13,9 +13,7 @@ const options = {
   title: {
     text: "Weekly Rank"
   },
-  tooltip: {
-    enabled: false
-  },
+
   yAxis: {
     reversed: true,
     min: 1,
@@ -25,7 +23,8 @@ const options = {
   xAxis: {
     min: 1,
     max: 30,
-    label: "Week"
+    label: "Week",
+    minTickInterval: 1
   },
   plotOptions: {
     series: {
