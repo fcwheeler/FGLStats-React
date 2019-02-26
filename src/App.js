@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Dashboard from "./views/Dashboard";
 import Leaderboard from "./views/Leaderboard";
 import TeamReport from "./views/TeamReport";
+import GameReport from "./views/GameReport";
 import MenuAppBar from "./Components/MenuAppBar";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -39,7 +40,7 @@ class App extends Component {
             <Route exact path="/" render={() => <Dashboard />} />
             <Route exact path="/Leaderboard" render={() => <Leaderboard />} />
             <Route exact path="/TeamReport" render={() => <TeamReport />} />
-            <Route path="/TeamReport/:teamid" component={TeamReportID} />
+            <Route exact path="/GameReport" render={() => <GameReport />} />
           </div>
         </BrowserRouter>
       </div>

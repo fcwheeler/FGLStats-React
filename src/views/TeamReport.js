@@ -6,24 +6,13 @@ import PlaceGauge from "../Components/PlaceGauge";
 import WeekHistoryChart from "../Components/WeekHistoryChart";
 import WeeklyPicksTable from "../Components/WeeklyPicksTable";
 import PickBreakdownChart from "../Components/PickBreakdownChart";
-import Select from "@material-ui/core/Select";
-import { MenuItem, Link } from "@material-ui/core";
-import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
-import { LoadingOverlay, Loader } from "react-overlay-loader";
 import { connect } from "react-redux";
 import SelectTeam from "../Components/SelectTeam";
 import { selectTeam } from "../actions/selectedTeamAction";
 import Modal from "@material-ui/core/Modal";
 import "react-overlay-loader/styles.css";
 import Typography from "@material-ui/core/Typography";
-import MediaQuery from "react-responsive";
-
-const breakpoints = {
-  desktop: "(min-width: 1025px)",
-  tablet: "(min-width: 768px) and (max-width: 1024px)",
-  phone: "(max-width: 767px)"
-};
 
 const styles = theme => ({
   root: {
