@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import Done from "@material-ui/icons/Done";
 import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -13,6 +14,40 @@ const styles = theme => ({
     flexGrow: 1
   }
 });
+
+const gamesummary = {
+  totalPot: 98 * 100 - 125,
+  games: {
+    fullSeason: {
+      payout: 1500,
+      completed: false
+    },
+    Tri1: {
+      payout: 1500,
+      completed: true
+    },
+    Tri2: {
+      payout: 1500,
+      completed: false
+    },
+    Tri3: {
+      payout: 1500,
+      completed: false
+    },
+    Masters: {
+      payout: 1500,
+      completed: false
+    },
+    Skins: {
+      payout: 1500,
+      completed: false
+    },
+    Survivor: {
+      payout: 1500,
+      completed: false
+    }
+  }
+};
 
 class GameListTable extends Component {
   render() {
@@ -36,44 +71,79 @@ class GameListTable extends Component {
           <TableBody>
             <TableRow>
               <TableCell align="left">Full Season</TableCell>
-              <TableCell align="center">$0</TableCell>
-              <TableCell align="center" />
+              <TableCell align="center">
+                {gamesummary.games.fullSeason.payout}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {gamesummary.games.fullSeason.completed ? <Done /> : ""}{" "}
+              </TableCell>
               <TableCell align="center" />
             </TableRow>
             <TableRow>
               <TableCell align="left">Masters</TableCell>
-              <TableCell align="center">$0</TableCell>
-              <TableCell align="center" />
+              <TableCell align="center">
+                {gamesummary.games.Masters.payout}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {gamesummary.games.Masters.completed ? <Done /> : ""}{" "}
+              </TableCell>
               <TableCell align="center" />
             </TableRow>
             <TableRow>
               <TableCell align="left">Trimester 1</TableCell>
-              <TableCell align="center">$0</TableCell>
-              <TableCell align="center" />
+              <TableCell align="center">
+                {gamesummary.games.Tri1.payout}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {gamesummary.games.Tri1.completed ? <Done /> : ""}{" "}
+              </TableCell>
               <TableCell align="center" />
             </TableRow>
             <TableRow>
               <TableCell align="left">Trimester 2</TableCell>
-              <TableCell align="center">$0</TableCell>
-              <TableCell align="center" />
+              <TableCell align="center">
+                {gamesummary.games.Tri2.payout}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {gamesummary.games.Tri2.completed ? <Done /> : ""}{" "}
+              </TableCell>
               <TableCell align="center" />
             </TableRow>
             <TableRow>
               <TableCell align="left">Trimester 3</TableCell>
-              <TableCell align="center">$0</TableCell>
-              <TableCell align="center" />
+              <TableCell align="center">
+                {gamesummary.games.Tri3.payout}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {gamesummary.games.Tri3.completed ? <Done /> : ""}{" "}
+              </TableCell>
               <TableCell align="center" />
             </TableRow>
             <TableRow>
               <TableCell align="left">Skins</TableCell>
-              <TableCell align="center">$0</TableCell>
-              <TableCell align="center" />
+              <TableCell align="center">
+                {gamesummary.games.Skins.payout}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {gamesummary.games.Skins.completed ? <Done /> : ""}{" "}
+              </TableCell>
               <TableCell align="center" />
             </TableRow>
             <TableRow>
               <TableCell align="left">Survivor</TableCell>
-              <TableCell align="center">$0</TableCell>
-              <TableCell align="center" />
+              <TableCell align="center">
+                {gamesummary.games.Survivor.payout}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                {gamesummary.games.Survivor.completed ? <Done /> : ""}{" "}
+              </TableCell>
               <TableCell align="center" />
             </TableRow>
           </TableBody>

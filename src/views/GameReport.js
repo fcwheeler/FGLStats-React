@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import GameListTable from "../Components/GameListTable";
-
+import SurvivorList from "../Components/SurvivorList";
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -25,9 +25,14 @@ class GameReport extends Component {
           alignItems="center"
           className={classes.root}
         >
-          <Grid item xs={12} md={6} lg={6} xl={6}>
+          <Grid item xs={12} md={8} lg={4} xl={4}>
             <Paper className={classes.root} elevation={1}>
               <GameListTable />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={8} lg={4} xl={4}>
+            <Paper className={classes.root} elevation={1}>
+              <SurvivorList />
             </Paper>
           </Grid>
         </Grid>

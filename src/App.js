@@ -11,21 +11,20 @@ import { connect } from "react-redux";
 import Highcharts from "highcharts";
 import { fetchLeaderboard } from "./actions/leaderboardAction";
 import { fetchWeeklyPicks } from "./actions/weeklypicksAction";
+const charttheme = require("./Components/highchartTheme_538.json");
 
-const theme = require("./Components/highchartTheme_538.json");
 const styles = theme => ({
   root: {
     flexGrow: 1
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    margin: "auto",
-    maxWidth: 1000
+    margin: "auto"
   }
 });
 class App extends Component {
   componentWillMount() {
-    Highcharts.setOptions(theme);
+    Highcharts.setOptions(charttheme);
     this.props.fetchleaderboard();
     this.props.fetchweeklyPicks();
   }
