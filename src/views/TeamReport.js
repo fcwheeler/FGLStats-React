@@ -17,6 +17,14 @@ import { selectTeam } from "../actions/selectedTeamAction";
 import Modal from "@material-ui/core/Modal";
 import "react-overlay-loader/styles.css";
 import Typography from "@material-ui/core/Typography";
+import MediaQuery from "react-responsive";
+
+const breakpoints = {
+  desktop: "(min-width: 1025px)",
+  tablet: "(min-width: 768px) and (max-width: 1024px)",
+  phone: "(max-width: 767px)"
+};
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -27,23 +35,30 @@ const styles = theme => ({
   paper: {
     position: "absolute",
     width: theme.spacing.unit * 50,
+    maxWidth: "90%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: "none"
+  },
+  itemgrid: {
+    flexGrow: 1,
+    [theme.breakpoints.up("sm")]: {}
   }
 });
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 0;
+  const left = 0;
 
   return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    margin: "auto",
+    transform: `translate(-${top}%, -${left}%)`,
+    alignItems: "center",
+    justifyContent: "center"
   };
 }
+
 class TeamReport extends Component {
   constructor(props) {
     super(props);
@@ -72,7 +87,6 @@ class TeamReport extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div>
         <h1>Team Report</h1>
@@ -81,65 +95,80 @@ class TeamReport extends Component {
           <>
             <Grid
               container
-              direction="column"
+              direction={"column"}
               justify="center"
               alignItems="center"
               className={classes.root}
-              spacing={16}
             >
               <Grid item xs={12}>
                 <h2>{this.props.selectedteam.selectedteam.name}</h2>
               </Grid>
-              <Grid container justify="center">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.handleclearteam}
-                >
-                  Change Team
-                </Button>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                className={classes.root}
-                spacing={16}
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={this.handleclearteam}
               >
-                <Grid item xs={3}>
-                  <Paper className={classes.root} elevation={1}>
-                    <PlaceGauge />
-                  </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                  <Paper className={classes.root} elevation={1}>
-                    <WeekHistoryChart />
-                  </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                  <Paper className={classes.root} elevation={1}>
-                    <WeeklyPicksTable />
-                  </Paper>
-                </Grid>
-                <Grid item xs={8}>
-                  <Paper className={classes.root} elevation={1}>
-                    <PickBreakdownChart />
-                  </Paper>
-                </Grid>
+                Change Team
+              </Button>
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              className={classes.itemgrid}
+              spacing={16}
+            >
+              <Grid item xs={12} md={3} lg={3} xl={3}>
+                <Paper className={classes.root} elevation={1}>
+                  <PlaceGauge />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6} xl={6}>
+                <Paper className={classes.root} elevation={1}>
+                  <WeekHistoryChart />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={8} lg={8} xl={8}>
+                <Paper className={classes.root} elevation={1}>
+                  <WeeklyPicksTable />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={8} lg={8} xl={8}>
+                <Paper className={classes.root} elevation={1}>
+                  <PickBreakdownChart />
+                </Paper>
               </Grid>
             </Grid>
           </>
         ) : (
-          <Modal open={true}>
-            <Paper className={classes.paper} style={getModalStyle()}>
-              <Typography variant="h6" id="modal-title">
-                Select a Team
-              </Typography>
-              <SelectTeam />
-            </Paper>
-          </Modal>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item xs={12} lg={4} xl={4}>
+              <Modal
+                open={true}
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex"
+                }}
+              >
+                <Paper className={classes.paper} style={getModalStyle()}>
+                  <Typography variant="h6" id="modal-title">
+                    Select a Team
+                  </Typography>
+                  <SelectTeam defaultText="Loading Teams" />
+                </Paper>
+              </Modal>
+            </Grid>
+          </Grid>
         )}
       </div>
     );

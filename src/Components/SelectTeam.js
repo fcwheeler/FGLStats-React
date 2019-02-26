@@ -8,7 +8,7 @@ import { selectTeam } from "../actions/selectedTeamAction";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
-  root: {
+  selectDiv: {
     flexGrow: 1
   },
   button: {
@@ -26,12 +26,25 @@ class SelectTeam extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        <Select value="select" onChange={this.handleTeamChange}>
-          <MenuItem value="select" selected>
-            Select
-          </MenuItem>
+      <div className={classes.selectDiv}>
+        <Select
+          value="select"
+          onChange={this.handleTeamChange}
+          style={{ width: 250 }}
+        >
+          {this.props.leaderboard.teams ? (
+            <MenuItem value="select" selected>
+              Select
+            </MenuItem>
+          ) : (
+            <MenuItem value="select" selected>
+              Loading Teams
+            </MenuItem>
+          )}
+
           {this.props.leaderboard.teams ? (
             this.props.leaderboard.teams
               .slice()
@@ -55,7 +68,7 @@ class SelectTeam extends Component {
                 </MenuItem>
               ))
           ) : (
-            <> </>
+            <></>
           )}
         </Select>
       </div>
