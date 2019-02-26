@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
 require("highcharts-more")(Highcharts);
 require("highcharts/modules/solid-gauge")(Highcharts);
+require("highcharts/modules/annotations")(Highcharts);
 
 const options = {
   chart: {
@@ -34,7 +35,17 @@ const options = {
   series: [],
   credits: {
     enabled: false
-  }
+  },
+  annotations: [
+    {
+      labelOptions: {
+        backgroundColor: "rgba(255,255,255,0.5)",
+        verticalAlign: "top",
+        y: 15
+      },
+      labels: []
+    }
+  ]
 };
 
 class WeekHistoryChart extends React.Component {
@@ -60,6 +71,23 @@ class WeekHistoryChart extends React.Component {
         type: "line",
         name: "Weekly Rank"
       };
+
+      let firstMissedCut = team.weeksummary.find(pick => {
+        return pick.weekearnings === 0;
+      });
+      options.annotations[0].labels = [];
+      if (firstMissedCut) {
+        options.annotations[0].labels.push({
+          point: {
+            xAxis: 0,
+            yAxis: 0,
+            x: firstMissedCut.week,
+            y: team.ranksummary[firstMissedCut.week - 1].rank
+          },
+          text: "Out of Survivor Pool"
+        });
+      }
+
       console.log(options);
     }
 
