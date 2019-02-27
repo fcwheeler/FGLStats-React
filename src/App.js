@@ -4,6 +4,7 @@ import Dashboard from "./views/Dashboard";
 import Leaderboard from "./views/Leaderboard";
 import TeamReport from "./views/TeamReport";
 import GameReport from "./views/GameReport";
+import SignUp from "./views/SignUp";
 import MenuAppBar from "./Components/MenuAppBar";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -37,6 +38,7 @@ class App extends Component {
             <MenuAppBar title="FGL Stats" />
 
             <Route exact path="/" render={() => <Dashboard />} />
+            <Route exact path="/SignUp" render={() => <SignUp />} />
             <Route exact path="/Leaderboard" render={() => <Leaderboard />} />
             <Route exact path="/TeamReport" render={() => <TeamReport />} />
             <Route exact path="/GameReport" render={() => <GameReport />} />

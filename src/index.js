@@ -6,6 +6,10 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
 
+import config from "./aws-exports";
+import Amplify from "aws-amplify";
+Amplify.configure(config);
+
 ReactDOM.render(
   <Provider store={configureStore()}>
     <App />

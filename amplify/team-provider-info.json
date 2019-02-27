@@ -1,0 +1,20 @@
+{
+    "fglstats": {
+        "awscloudformation": {
+            "AuthRoleName": "fglstatsreact-20190227141951-authRole",
+            "UnauthRoleArn": "arn:aws:iam::241626431047:role/fglstatsreact-20190227141951-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::241626431047:role/fglstatsreact-20190227141951-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "fglstatsreact-20190227141951-deployment",
+            "UnauthRoleName": "fglstatsreact-20190227141951-unauthRole",
+            "StackName": "fglstatsreact-20190227141951",
+            "StackId": "arn:aws:cloudformation:us-east-1:241626431047:stack/fglstatsreact-20190227141951/a80bd6e0-3ac4-11e9-a99b-129cd46a326a"
+        },
+        "categories": {
+            "auth": {
+                "cognitof6e6f9bf": {},
+                "cognito6a8a1dce": {}
+            }
+        }
+    }
+}
