@@ -10,9 +10,11 @@ Redux
 Highcharts
 AWS API Gateway
 AWS Lambda
+AWS Amplify
 Material UI
 
-ToDo: Implement DB (mongoDB?).
+
+ToDo: Implement DB (probably DynamoDB given the AWS bias here).
 
 
 Production site is http://fglstats.com
