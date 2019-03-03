@@ -5,6 +5,7 @@ import Chart from "../Components/TeamReportChart";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -55,5 +56,7 @@ class Dashboard extends Component {
     );
   }
 }
+
+
 
 export default withStyles(styles)(Dashboard);

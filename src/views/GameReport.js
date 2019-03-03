@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import GameListTable from "../Components/GameListTable";
 import SurvivorList from "../Components/SurvivorList";
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -44,5 +45,7 @@ class GameReport extends Component {
 const mapStateToProps = state => ({
   ...state
 });
+
+
 
 export default withStyles(styles)(connect(mapStateToProps)(GameReport));

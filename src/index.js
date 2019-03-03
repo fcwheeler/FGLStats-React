@@ -12,7 +12,7 @@ Amplify.configure(config);
 
 ReactDOM.render(
   <Provider store={configureStore()}>
-    <App />
+ <App />
   </Provider>,
   document.getElementById("root")
 );

@@ -6,6 +6,7 @@
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "aws-amplify": "^1.1.19",
+    "aws-amplify-react": "^2.3.0",
     "cheerio": "^1.0.0-rc.2",
     "cheerio-tableparser": "^1.0.1",
     "highcharts": "^7.0.3",

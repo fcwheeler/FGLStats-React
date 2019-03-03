@@ -10,6 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 const styles = {
   root: {
@@ -36,6 +37,13 @@ class MenuAppBar extends React.Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  Signout = () =>{
+    Auth.signOut()
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+
   };
 
   render() {
@@ -83,10 +91,12 @@ class MenuAppBar extends React.Component {
               <Link component={RouterLink} to="/GameReport" underline="none">
                 <MenuItem onClick={this.handleClose}>Games</MenuItem>{" "}
               </Link>
+              <MenuItem onClick={this.Signout}>Sign Out</MenuItem>
             </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {this.props.title}
             </Typography>
+            
           </Toolbar>
         </AppBar>
       </div>

@@ -14,6 +14,7 @@ import Modal from "@material-ui/core/Modal";
 import "react-overlay-loader/styles.css";
 import Typography from "@material-ui/core/Typography";
 
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -171,6 +172,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   selectTeam: team => dispatch(selectTeam(team))
 });
+
+
+
 
 export default withStyles(styles)(
   connect(
