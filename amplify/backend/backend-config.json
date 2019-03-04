@@ -8,5 +8,44 @@
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}
+	},
+	"storage": {
+		"FGLStatsDB": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"FGLStatsAPILeagues": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "FGLStatsDB",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
+	},
+	"api": {
+		"FGLStatsAPI": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "FGLStatsAPILeagues",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
 	}
 }
