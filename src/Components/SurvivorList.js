@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { connect } from "react-redux";
 import weeklypicksReducer from "../reducers/weeklypicksReducer";
+import { Grid } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -35,30 +36,53 @@ class SurvivorList extends Component {
 
     return (
       <div>
-        <h2>Survivor Pool</h2>
-
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Team</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.props.weeklypicks.teams ? (
-              this.getAliveTeams().map((team, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell>{team.formattedteamname}</TableCell>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          spacing={16}
+        >
+          <Grid item>
+            <h2>Survivor Pool</h2>
+          </Grid>
+          {this.props.weeklypicks.teams ? (
+            <Grid item xs={12}>
+              <Typography>
+                {" "}
+                {this.getAliveTeams().length} Teams Alive
+              </Typography>
+            </Grid>
+          ) : (
+            <></>
+          )}
+          <Grid item fullwidth>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Team</TableCell>
+                  <TableCell>Owner</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.props.weeklypicks.teams ? (
+                  this.getAliveTeams().map((team, index) => {
+                    return (
+                      <TableRow key={index}>
+                        <TableCell>{team.formattedteamname}</TableCell>
+                        <TableCell>{team.owner}</TableCell>
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell>Loading...</TableCell>
                   </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell>Loading...</TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+                )}
+              </TableBody>
+            </Table>
+          </Grid>
+        </Grid>
       </div>
     );
   }
