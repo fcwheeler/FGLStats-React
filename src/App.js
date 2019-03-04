@@ -34,8 +34,12 @@ class App extends Component {
   }
 
   render() {
+
+    this._validAuthStates = ['signedIn'];
+    const AuthOn = false;
     return (
       <div>
+        {AuthOn?
         <BrowserRouter forceRefresh={true}>
           <div>
           <MenuAppBar title="FGL Stats" />
@@ -64,7 +68,7 @@ class App extends Component {
             custom: false
           }]}
             
-          }>
+          }>    
     <Route exact path="/" render={() =>  <Dashboard /> }/>
             <Route exact path="/DashBoard" render={() => <Dashboard />} />            
             <Route exact path="/Leaderboard" render={() => <Leaderboard />} />
@@ -73,6 +77,18 @@ class App extends Component {
             </Authenticator>
           </div>
         </BrowserRouter>
+        :
+        <BrowserRouter forceRefresh={true}>
+          <div>
+          <MenuAppBar title="FGL Stats" />          
+    <Route exact path="/" render={() =>  <Dashboard /> }/>
+            <Route exact path="/DashBoard" render={() => <Dashboard />} />            
+            <Route exact path="/Leaderboard" render={() => <Leaderboard />} />
+            <Route exact path="/TeamReport" render={() => <TeamReport />} />
+            <Route exact path="/GameReport" render={() => <GameReport />} />
+      
+          </div>
+        </BrowserRouter>}
       </div>
     );
   }
