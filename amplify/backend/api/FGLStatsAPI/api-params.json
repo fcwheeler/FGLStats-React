@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/leagues",
+            "lambdaFunction": "FGLStatsAPILeagues",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "FGLStatsAPI",
+    "apiName": "FGLStatsAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "FGLStatsAPILeagues"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "fglstatsreact-20190227141951-authRole",
+        "unAuthRoleName": "fglstatsreact-20190227141951-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "FGLStatsAPILeagues",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
