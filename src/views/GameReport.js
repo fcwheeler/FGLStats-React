@@ -9,6 +9,11 @@ import SurvivorList from "../Components/SurvivorList";
 const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    height: "100%",
+    color: theme.palette.text.secondary
   }
 });
 class GameReport extends Component {
@@ -21,18 +26,19 @@ class GameReport extends Component {
 
         <Grid
           container
-          direction={"column"}
+          direction="column"
           justify="center"
           alignItems="center"
           className={classes.root}
+          spacing={16}
         >
-          <Grid item xs={12} md={8} lg={4} xl={4}>
-            <Paper className={classes.root} elevation={1}>
+          <Grid item xs={12} md={4} lg={4} xl={4}>
+            <Paper className={classes.paper} elevation={1}>
               <GameListTable />
             </Paper>
           </Grid>
-          <Grid item xs={12} md={8} lg={4} xl={4}>
-            <Paper className={classes.root} elevation={1}>
+          <Grid item xs={12} md={4} lg={4} xl={4}>
+            <Paper className={classes.paper} elevation={1}>
               <SurvivorList />
             </Paper>
           </Grid>
@@ -45,7 +51,5 @@ class GameReport extends Component {
 const mapStateToProps = state => ({
   ...state
 });
-
-
 
 export default withStyles(styles)(connect(mapStateToProps)(GameReport));
