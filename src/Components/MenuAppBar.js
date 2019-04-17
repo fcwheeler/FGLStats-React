@@ -39,11 +39,10 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  Signout = () =>{
+  Signout = () => {
     Auth.signOut()
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -91,12 +90,10 @@ class MenuAppBar extends React.Component {
               <Link component={RouterLink} to="/GameReport" underline="none">
                 <MenuItem onClick={this.handleClose}>Games</MenuItem>{" "}
               </Link>
-              <MenuItem onClick={this.Signout}>Sign Out</MenuItem>
             </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {this.props.title}
             </Typography>
-            
           </Toolbar>
         </AppBar>
       </div>
