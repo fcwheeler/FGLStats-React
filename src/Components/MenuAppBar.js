@@ -90,6 +90,9 @@ class MenuAppBar extends React.Component {
               <Link component={RouterLink} to="/GameReport" underline="none">
                 <MenuItem onClick={this.handleClose}>Games</MenuItem>{" "}
               </Link>
+              <Link component={RouterLink} to="/SurvivorPool" underline="none">
+                <MenuItem onClick={this.handleClose}>Survivor Pool</MenuItem>{" "}
+              </Link>
             </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {this.props.title}

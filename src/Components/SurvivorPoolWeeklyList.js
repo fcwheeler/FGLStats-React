@@ -28,19 +28,30 @@ class SurvivorPoolWeeklyList extends Component {
         }).length === 0
       );
     });
+    return teamsalive;
   }
 
-  getOut() { 
-
+  getOut(weeknum) {
     let teamsOut = this.props.weeklypicks.teams.filter(team => {
       return (
         team.weeksummary.filter(week => {
-          return week.weekearnings === 0 && week.weeknum <= weeknum;
+          return week.weekearnings === 0;
         }).length !== 0
       );
     });
 
-return teamsOut;
+    teamsOut.forEach(team => {
+      team.weekoutlist = team.weeksummary.filter(week => {
+        return week.weekearnings === 0;
+      });
+      team.weekout = team.weekoutlist[0].week;
+    });
+
+    teamsOut.sort(function(a, b) {
+      return b.weekout - a.weekout;
+    });
+
+    return teamsOut;
   }
   render() {
     const { classes } = this.props;
@@ -60,16 +71,6 @@ return teamsOut;
 
           {this.props.weeklypicks.teams ? (
             <>
-              <Grid item>
-                <Select onChange={this.handleChange} value="Current Week">
-                  <MenuItem value="Current">
-                    <em>Current Week</em>
-                  </MenuItem>
-                  <MenuItem value={1}>Week 1</MenuItem>
-                  <MenuItem value={2}>Week 2</MenuItem>
-                  <MenuItem value={3}>Week 3</MenuItem>
-                </Select>
-              </Grid>
               <Grid item xs={12}>
                 <Typography>
                   {" "}
@@ -86,22 +87,16 @@ return teamsOut;
                 <TableRow>
                   <TableCell>Team</TableCell>
                   <TableCell>Owner</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Week Out</TableCell>
+                  <TableCell>Tournament</TableCell>
+                  <TableCell>Golfer</TableCell>
+                  <TableCell>Tournament Earnings</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {this.props.weeklypicks.teams ? (
-              
-                  getAliveTeams().map((teamobj, index) => {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell>{team.formattedteamname}</TableCell>
-                        <TableCell>{team.owner}</TableCell>
-                        <TableCell>In</TableCell>
-                      </TableRow>
-                    )}
-                  ))
-                  (this.props.weeklypicks.teams ? (
-                    getOut.map((team, index) => {
+                  this.getAliveTeams().map((team, index) => {
                     return (
                       <TableRow key={index}>
                         <TableCell>{team.formattedteamname}</TableCell>
@@ -110,13 +105,32 @@ return teamsOut;
                       </TableRow>
                     );
                   })
-                  ))
-
-                : (
+                ) : (
                   <TableRow>
                     <TableCell>Loading...</TableCell>
                   </TableRow>
                 )}
+                {this.props.weeklypicks.teams
+                  ? this.getOut().map((team, index) => {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{team.formattedteamname}</TableCell>
+                          <TableCell>{team.owner}</TableCell>
+                          <TableCell>Out</TableCell>
+                          <TableCell>{team.weekout}</TableCell>
+                          <TableCell>
+                            {team.picks[team.weekout - 1].tournament}
+                          </TableCell>
+                          <TableCell>
+                            {team.picks[team.weekout - 1].player}
+                          </TableCell>
+                          <TableCell>
+                            {team.picks[team.weekout - 1].earnings}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  : null}
               </TableBody>
             </Table>
           </Grid>

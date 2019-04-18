@@ -31,7 +31,7 @@ class SurvivorPool extends Component {
           className={classes.root}
           spacing={16}
         >
-          <Grid item xs={12} md={4} lg={4} xl={4}>
+          <Grid item xs={12} xl={8}>
             <Paper className={classes.paper} elevation={1}>
               <SurvivorPoolWeeklyList week={1} />
             </Paper>
