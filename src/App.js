@@ -5,6 +5,7 @@ import Leaderboard from "./views/Leaderboard";
 import TeamReport from "./views/TeamReport";
 import GameReport from "./views/GameReport";
 import SurvivorPool from "./views/SurvivorPool";
+import Trimesters from "./views/Trimesters";
 import MenuAppBar from "./Components/MenuAppBar";
 import "./App.css";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
@@ -87,6 +88,7 @@ class App extends Component {
                   path="/SurvivorPool"
                   render={() => <SurvivorPool />}
                 />
+                <Route exact path="/Trimesters" render={() => <Trimesters />} />
               </Authenticator>
             </div>
           </BrowserRouter>
@@ -104,6 +106,7 @@ class App extends Component {
                 path="/SurvivorPool"
                 render={() => <SurvivorPool />}
               />
+              <Route exact path="/Trimesters" render={() => <Trimesters />} />
             </div>
           </BrowserRouter>
         )}

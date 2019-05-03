@@ -16,40 +16,40 @@ const styles = theme => ({
   }
 });
 
-class SurvivorPoolWeeklyList extends Component {
-  getAliveTeams() {
-    let teamsalive = this.props.weeklypicks.teams.filter(team => {
-      return (
-        team.weeksummary.filter(week => {
-          return week.weekearnings === 0;
-        }).length === 0
-      );
-    });
-    return teamsalive;
+const Trimesters = [
+  {
+    start: 0,
+    end: 11
+  },
+  {
+    start: 12,
+    end: 20
+  },
+  {
+    start: 24,
+    end: 30
   }
+];
 
-  getOut(weeknum) {
-    let teamsOut = this.props.weeklypicks.teams.filter(team => {
-      return (
-        team.weeksummary.filter(week => {
-          return week.weekearnings === 0;
-        }).length !== 0
-      );
-    });
-
-    teamsOut.forEach(team => {
-      team.weekoutlist = team.weeksummary.filter(week => {
-        return week.weekearnings === 0;
+class TrimesterList extends Component {
+  getTrimesterTeams() {
+    const tri = Trimesters[this.props.tri];
+    let teamtotals = this.props.weeklypicks.teams
+      .filter(team => {
+        return (team.tritotal = team.weeksummary
+          .filter(week => {
+            return week.week >= tri.start && week.week <= tri.end;
+          })
+          .reduce(function(total, week) {
+            return total + week.weekearnings;
+          }, 0));
+      })
+      .sort(function(a, b) {
+        return b.tritotal - a.tritotal;
       });
-      team.weekout = team.weekoutlist[0].week;
-    });
-
-    teamsOut.sort(function(a, b) {
-      return b.weekout - a.weekout;
-    });
-
-    return teamsOut;
+    return teamtotals;
   }
+
   render() {
     const { classes } = this.props;
 
@@ -63,41 +63,29 @@ class SurvivorPoolWeeklyList extends Component {
           spacing={16}
         >
           <Grid item>
-            <h2>Survivor Pool</h2>
+            <h2>Trimester Report</h2>
           </Grid>
-
-          {this.props.weeklypicks.teams ? (
-            <>
-              <Grid item xs={12}>
-                <Typography>
-                  {" "}
-                  {this.getAliveTeams().length} Teams Alive
-                </Typography>
-              </Grid>
-            </>
-          ) : (
-            <></>
-          )}
           <Grid item fullwidth>
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>Team</TableCell>
                   <TableCell>Owner</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Week Out</TableCell>
-                  <TableCell>Tournament</TableCell>
-                  <TableCell>Golfer</TableCell>
-                  <TableCell>Tournament Earnings</TableCell>
+                  <TableCell>Total</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {this.props.weeklypicks.teams ? (
-                  this.getAliveTeams().map((team, index) => {
+                  this.getTrimesterTeams().map((team, index) => {
                     return (
                       <TableRow key={index}>
                         <TableCell>{team.formattedteamname}</TableCell>
                         <TableCell>{team.owner}</TableCell>
+                        <TableCell>
+                          {team.tritotal
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </TableCell>
                         <TableCell />
                       </TableRow>
                     );
@@ -120,6 +108,4 @@ const mapStateToProps = state => ({
   ...state
 });
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(SurvivorPoolWeeklyList)
-);
+export default withStyles(styles)(connect(mapStateToProps)(TrimesterList));
