@@ -1,0 +1,7 @@
+{
+    "tableName": "FGLStatsscrappedData",
+    "partitionKeyName": "id",
+    "partitionKeyType": "S",
+    "sortKeyName": "createdDate",
+    "sortKeyType": "S"
+}

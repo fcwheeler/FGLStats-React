@@ -98,6 +98,7 @@ class SurvivorPoolWeeklyList extends Component {
                       <TableRow key={index}>
                         <TableCell>{team.formattedteamname}</TableCell>
                         <TableCell>{team.owner}</TableCell>
+                        <TableCell>In</TableCell>
                         <TableCell />
                       </TableRow>
                     );
@@ -106,7 +107,27 @@ class SurvivorPoolWeeklyList extends Component {
                   <TableRow>
                     <TableCell>Loading...</TableCell>
                   </TableRow>
-                )}
+                )}{this.props.weeklypicks.teams	
+                  ? this.getOut().map((team, index) => {	
+                      return (	
+                        <TableRow key={index}>	
+                          <TableCell>{team.formattedteamname}</TableCell>	
+                          <TableCell>{team.owner}</TableCell>	
+                          <TableCell>Out</TableCell>	
+                          <TableCell>{team.weekout}</TableCell>	
+                          <TableCell>	
+                            {team.picks[team.weekout - 1].tournament}	
+                          </TableCell>	
+                          <TableCell>	
+                            {team.picks[team.weekout - 1].player}	
+                          </TableCell>	
+                          <TableCell>	
+                            {team.picks[team.weekout - 1].earnings}	
+                          </TableCell>	
+                        </TableRow>	
+                      );	
+                    })	
+                  : null}
               </TableBody>
             </Table>
           </Grid>
