@@ -17,6 +17,11 @@ const styles = theme => ({
 });
 
 class SurvivorPoolWeeklyList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { gameOver: false, aliveTeams: null, outTeams: null };
+  }
+
   getAliveTeams() {
     let teamsalive = this.props.weeklypicks.teams.filter(team => {
       return (
@@ -25,7 +30,8 @@ class SurvivorPoolWeeklyList extends Component {
         }).length === 0
       );
     });
-    return teamsalive;
+
+    this.setState({ aliveTeams: teamsalive });
   }
 
   getOut(weeknum) {
@@ -48,11 +54,11 @@ class SurvivorPoolWeeklyList extends Component {
       return b.weekout - a.weekout;
     });
 
-    return teamsOut;
+    this.setState({ outTeams: teamsOut });
   }
   render() {
     const { classes } = this.props;
-
+    const isOver = this.state.gameOver;
     return (
       <div>
         <Grid
@@ -92,8 +98,8 @@ class SurvivorPoolWeeklyList extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.props.weeklypicks.teams ? (
-                  this.getAliveTeams().map((team, index) => {
+                {this.state.aliveTeams ? (
+                  this.state.aliveTeams.map((team, index) => {
                     return (
                       <TableRow key={index}>
                         <TableCell>{team.formattedteamname}</TableCell>
@@ -107,26 +113,33 @@ class SurvivorPoolWeeklyList extends Component {
                   <TableRow>
                     <TableCell>Loading...</TableCell>
                   </TableRow>
-                )}{this.props.weeklypicks.teams	
-                  ? this.getOut().map((team, index) => {	
-                      return (	
-                        <TableRow key={index}>	
-                          <TableCell>{team.formattedteamname}</TableCell>	
-                          <TableCell>{team.owner}</TableCell>	
-                          <TableCell>Out</TableCell>	
-                          <TableCell>{team.weekout}</TableCell>	
-                          <TableCell>	
-                            {team.picks[team.weekout - 1].tournament}	
-                          </TableCell>	
-                          <TableCell>	
-                            {team.picks[team.weekout - 1].player}	
-                          </TableCell>	
-                          <TableCell>	
-                            {team.picks[team.weekout - 1].earnings}	
-                          </TableCell>	
-                        </TableRow>	
-                      );	
-                    })	
+                )}
+                {this.state.outTeams
+                  ? this.state.outTeams.map((team, index, array) => {
+                      let isWinner = false;
+                      if (isOver) {
+                        if (array[0].weekout === team.weekout) {
+                          isWinner = true;
+                        }
+                      }
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{team.formattedteamname}</TableCell>
+                          <TableCell>{team.owner}</TableCell>
+                          <TableCell>{isWinner ? "Winner" : "Out"}</TableCell>
+                          <TableCell>{team.weekout}</TableCell>
+                          <TableCell>
+                            {team.picks[team.weekout - 1].tournament}
+                          </TableCell>
+                          <TableCell>
+                            {team.picks[team.weekout - 1].player}
+                          </TableCell>
+                          <TableCell>
+                            {team.picks[team.weekout - 1].earnings}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
                   : null}
               </TableBody>
             </Table>
