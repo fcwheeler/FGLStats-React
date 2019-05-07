@@ -13,6 +13,9 @@ import { Grid } from "@material-ui/core";
 const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  winner: {
+    backgroundColor: "#4fe84f"
   }
 });
 
@@ -36,17 +39,26 @@ class TrimesterList extends Component {
     const tri = Trimesters[this.props.tri];
     let teamtotals = this.props.weeklypicks.teams
       .filter(team => {
-        return (team.tritotal = team.weeksummary
+        team.tritotal = team.weeksummary
           .filter(week => {
             return week.week >= tri.start && week.week <= tri.end;
           })
           .reduce(function(total, week) {
             return total + week.weekearnings;
-          }, 0));
+          }, 0);
+
+        team.tridone =
+          team.weeksummary.filter(week => {
+            return week.week >= tri.start && week.week <= tri.end;
+          }).length >=
+          tri.end - tri.start;
+
+        return team;
       })
       .sort(function(a, b) {
         return b.tritotal - a.tritotal;
       });
+
     return teamtotals;
   }
 
@@ -78,7 +90,12 @@ class TrimesterList extends Component {
                 {this.props.weeklypicks.teams ? (
                   this.getTrimesterTeams().map((team, index) => {
                     return (
-                      <TableRow key={index}>
+                      <TableRow
+                        key={index}
+                        className={
+                          team.tridone && index === 0 ? classes.winner : ""
+                        }
+                      >
                         <TableCell>{team.formattedteamname}</TableCell>
                         <TableCell>{team.owner}</TableCell>
                         <TableCell>

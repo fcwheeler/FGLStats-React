@@ -13,6 +13,9 @@ import { Grid } from "@material-ui/core";
 const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  winner: {
+    backgroundColor: "#4fe84f"
   }
 });
 
@@ -20,6 +23,13 @@ class SurvivorPoolWeeklyList extends Component {
   constructor(props) {
     super(props);
     this.state = { gameOver: false, aliveTeams: null, outTeams: null };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.weeklypicks !== this.props.weeklypicks) {
+      this.getAliveTeams();
+      this.getOut();
+    }
   }
 
   getAliveTeams() {
@@ -31,7 +41,10 @@ class SurvivorPoolWeeklyList extends Component {
       );
     });
 
-    this.setState({ aliveTeams: teamsalive });
+    this.setState({
+      aliveTeams: teamsalive,
+      gameOver: teamsalive.length === 0
+    });
   }
 
   getOut(weeknum) {
@@ -77,14 +90,18 @@ class SurvivorPoolWeeklyList extends Component {
               <Grid item xs={12}>
                 <Typography>
                   {" "}
-                  {this.getAliveTeams().length} Teams Alive
+                  {this.state.aliveTeams && this.state.aliveTeams.length > 1
+                    ? this.state.aliveTeams.length + " Teams Alive"
+                    : this.state.aliveTeams
+                    ? "We have a winner!"
+                    : ""}{" "}
                 </Typography>
               </Grid>
             </>
           ) : (
             <></>
           )}
-          <Grid item fullwidth>
+          <Grid item>
             <Table>
               <TableHead>
                 <TableRow>
@@ -123,7 +140,10 @@ class SurvivorPoolWeeklyList extends Component {
                         }
                       }
                       return (
-                        <TableRow key={index}>
+                        <TableRow
+                          key={index}
+                          className={isWinner ? classes.winner : ""}
+                        >
                           <TableCell>{team.formattedteamname}</TableCell>
                           <TableCell>{team.owner}</TableCell>
                           <TableCell>{isWinner ? "Winner" : "Out"}</TableCell>
