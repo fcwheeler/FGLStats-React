@@ -49,11 +49,9 @@ class LeaderBoardList extends Component {
   }
 
   handle_Search = e => {
-    var filteredteams = this.props
-      .leaderboard()
-      .filter(item =>
-        item.name.toLowerCase().includes(e.target.value.toLowerCase())
-      );
+    var filteredteams = this.props.leaderboard.teams.filter(item =>
+      item.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
     console.log(filteredteams);
   };
 

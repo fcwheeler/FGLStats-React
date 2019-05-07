@@ -76,9 +76,6 @@ class MenuAppBar extends React.Component {
               open={open}
               onClose={this.handleClose}
             >
-              <Link component={RouterLink} to="/" underline="none">
-                <MenuItem onClick={this.handleClose}>Dashboard</MenuItem>
-              </Link>
               <Link component={RouterLink} to="/leaderboard" underline="none">
                 {" "}
                 <MenuItem onClick={this.handleClose}>Leaderboard</MenuItem>
@@ -86,9 +83,6 @@ class MenuAppBar extends React.Component {
               <Link component={RouterLink} to="/TeamReport" underline="none">
                 {" "}
                 <MenuItem onClick={this.handleClose}>Team Report</MenuItem>
-              </Link>
-              <Link component={RouterLink} to="/GameReport" underline="none">
-                <MenuItem onClick={this.handleClose}>Games</MenuItem>{" "}
               </Link>
               <Link component={RouterLink} to="/SurvivorPool" underline="none">
                 <MenuItem onClick={this.handleClose}>Survivor Pool</MenuItem>{" "}

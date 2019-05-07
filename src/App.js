@@ -74,7 +74,7 @@ class App extends Component {
                   ]
                 }}
               >
-                <Route exact path="/" render={() => <Dashboard />} />
+                <Route exact path="/" render={() => <Leaderboard />} />
                 <Route exact path="/DashBoard" render={() => <Dashboard />} />
                 <Route
                   exact
@@ -96,7 +96,7 @@ class App extends Component {
           <BrowserRouter forceRefresh={true}>
             <div>
               <MenuAppBar title="FGL Stats" />
-              <Route exact path="/" render={() => <Dashboard />} />
+              <Route exact path="/" render={() => <Leaderboard />} />
               <Route exact path="/DashBoard" render={() => <Dashboard />} />
               <Route exact path="/Leaderboard" render={() => <Leaderboard />} />
               <Route exact path="/TeamReport" render={() => <TeamReport />} />
