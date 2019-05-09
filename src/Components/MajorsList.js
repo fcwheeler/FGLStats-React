@@ -19,61 +19,42 @@ const styles = theme => ({
   }
 });
 
-class HighestFinishersList extends Component {
+class MajorsList extends Component {
   constructor(props) {
     super(props);
     this.state = { teams: null };
   }
 
   componentDidMount() {
+    console.log(this.props.weeklypicks);
     if (Object.keys(this.props.weeklypicks).length > 0) {
-      this.getTopFinishers();
+      this.getMajorsTotal();
     }
   }
 
   componentDidUpdate(prevProps) {
+    console.log(prevProps);
     if (prevProps.weeklypicks !== this.props.weeklypicks) {
-      this.getTopFinishers();
+      this.getMajorsTotal();
     }
   }
 
-  getTopFinishers() {
+  getMajorsTotal() {
     let teams = this.props.weeklypicks.teams;
 
-    const weekHighestEarnings = [];
+    const majorsweeks = [7, 11, 16, 20, 25];
 
     teams.forEach(team => {
-      team.weeksummary.forEach(week => {
-        if (weekHighestEarnings[week.week - 1]) {
-          if (
-            week.weekearnings > weekHighestEarnings[week.week - 1].topEarnings
-          ) {
-            weekHighestEarnings[week.week - 1].topEarnings = week.weekearnings;
-            weekHighestEarnings[week.week - 1].topEarnerName =
-              team.formattedteamname;
-          }
-        } else {
-          weekHighestEarnings.push({
-            week: week.week,
-            topEarnings: week.weekearnings,
-            topEarnerName: team.formattedteamname
-          });
-        }
-      });
-    });
-
-    teams.forEach(team => {
-      team.topFinishes = team.weeksummary.reduce((acc, week) => {
-        const addValue =
-          week.weekearnings === weekHighestEarnings[week.week - 1].topEarnings
-            ? 1
-            : 0;
+      team.MajorsTotal = team.weeksummary.reduce((acc, week) => {
+        const addValue = majorsweeks.includes(week.week)
+          ? week.weekearnings
+          : 0;
         return acc + addValue;
       }, 0);
     });
 
     teams.sort(function(a, b) {
-      return b.topFinishes - a.topFinishes;
+      return b.MajorsTotal - a.MajorsTotal;
     });
 
     console.log(teams);
@@ -95,7 +76,7 @@ class HighestFinishersList extends Component {
           spacing={16}
         >
           <Grid item>
-            <h2>Top Finishes</h2>
+            <h2>Majors Pool Leaders</h2>
           </Grid>
           <Grid item>
             <Table>
@@ -103,7 +84,7 @@ class HighestFinishersList extends Component {
                 <TableRow>
                   <TableCell>Team</TableCell>
                   <TableCell>Owner</TableCell>
-                  <TableCell>Top Finishes</TableCell>
+                  <TableCell>Majors Earnings</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -113,7 +94,12 @@ class HighestFinishersList extends Component {
                       <TableRow key={index}>
                         <TableCell>{team.formattedteamname}</TableCell>
                         <TableCell>{team.owner}</TableCell>
-                        <TableCell>{team.topFinishes}</TableCell>
+                        <TableCell>
+                          {team.MajorsTotal.toString().replace(
+                            /\B(?=(\d{3})+(?!\d))/g,
+                            ","
+                          )}
+                        </TableCell>
                         <TableCell />
                       </TableRow>
                     );
@@ -136,6 +122,4 @@ const mapStateToProps = state => ({
   ...state
 });
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(HighestFinishersList)
-);
+export default withStyles(styles)(connect(mapStateToProps)(MajorsList));

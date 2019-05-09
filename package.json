@@ -34,7 +34,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "aws s3 sync build/ s3://fglstats.com"
+    "deploy": "aws s3 sync build/ s3://fglstats.com",
+    "bd": "react-scripts build && aws s3 sync build/ s3://fglstats.com"
   },
   "eslintConfig": {
     "extends": "react-app"

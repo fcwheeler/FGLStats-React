@@ -86,7 +86,11 @@ class WeeklyPicksTable extends Component {
                     <TableCell align="left">{row.week}</TableCell>
                     <TableCell align="left">{row.tournament}</TableCell>
                     <TableCell align="left">{row.player}</TableCell>
-                    <TableCell align="center">{row.earnings}</TableCell>
+                    <TableCell align="center">
+                      {row.earnings
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </TableCell>
                   </TableRow>
                 ))
             ) : (

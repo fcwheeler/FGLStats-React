@@ -25,6 +25,13 @@ class SurvivorPoolWeeklyList extends Component {
     this.state = { gameOver: false, aliveTeams: null, outTeams: null };
   }
 
+  componentDidMount() {
+    if (Object.keys(this.props.weeklypicks).length > 0) {
+      this.getAliveTeams();
+      this.getOut();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.weeklypicks !== this.props.weeklypicks) {
       this.getAliveTeams();

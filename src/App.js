@@ -7,8 +7,9 @@ import GameReport from "./views/GameReport";
 import SurvivorPool from "./views/SurvivorPool";
 import Trimesters from "./views/Trimesters";
 import HighestFinishers from "./views/HighestFinishers";
+import MajorsPool from "./views/MajorsPool";
 import MenuAppBar from "./Components/MenuAppBar";
-
+import SideDrawer from "./Components/SideDrawer";
 import "./App.css";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -42,9 +43,10 @@ class App extends Component {
     return (
       <div>
         {AuthOn ? (
-          <BrowserRouter forceRefresh={true}>
+          <BrowserRouter forceRefresh={false}>
             <div>
               <MenuAppBar title="FGL Stats" />
+              <SideDrawer />
               <Authenticator
                 signUpConfig={{
                   hiddenDefaults: ["username", "phone_number"],
@@ -91,13 +93,20 @@ class App extends Component {
                   render={() => <SurvivorPool />}
                 />
                 <Route exact path="/Trimesters" render={() => <Trimesters />} />
+                <Route
+                  exact
+                  path="/HighestFinishers"
+                  render={() => <HighestFinishers />}
+                />
+                <Route exact path="/MajorsPool" render={() => <MajorsPool />} />
               </Authenticator>
             </div>
           </BrowserRouter>
         ) : (
-          <BrowserRouter forceRefresh={true}>
+          <BrowserRouter forceRefresh={false}>
             <div>
               <MenuAppBar title="FGL Stats" />
+              <SideDrawer />
               <Route exact path="/" render={() => <Leaderboard />} />
               <Route exact path="/DashBoard" render={() => <Dashboard />} />
               <Route exact path="/Leaderboard" render={() => <Leaderboard />} />
@@ -114,6 +123,7 @@ class App extends Component {
                 path="/HighestFinishers"
                 render={() => <HighestFinishers />}
               />
+              <Route exact path="/MajorsPool" render={() => <MajorsPool />} />
             </div>
           </BrowserRouter>
         )}

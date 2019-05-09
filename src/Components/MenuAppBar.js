@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { toggleDrawer } from "../actions/layoutAction";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -58,48 +60,10 @@ class MenuAppBar extends React.Component {
               className={classes.menuButton}
               color="inherit"
               aria-label="Menu"
-              onClick={this.handleMenu}
+              onClick={this.props.toggleDrawer}
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={open}
-              onClose={this.handleClose}
-            >
-              <Link component={RouterLink} to="/leaderboard" underline="none">
-                {" "}
-                <MenuItem onClick={this.handleClose}>Leaderboard</MenuItem>
-              </Link>
-              <Link component={RouterLink} to="/TeamReport" underline="none">
-                {" "}
-                <MenuItem onClick={this.handleClose}>Team Report</MenuItem>
-              </Link>
-              <Link component={RouterLink} to="/SurvivorPool" underline="none">
-                <MenuItem onClick={this.handleClose}>Survivor Pool</MenuItem>{" "}
-              </Link>
-              <Link component={RouterLink} to="/Trimesters" underline="none">
-                <MenuItem onClick={this.handleClose}>Trimesters</MenuItem>{" "}
-              </Link>
-              <Link
-                component={RouterLink}
-                to="/HighestFinishers"
-                underline="none"
-              >
-                <MenuItem onClick={this.handleClose}>
-                  Highest Finishers
-                </MenuItem>{" "}
-              </Link>
-            </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {this.props.title}
             </Typography>
@@ -110,8 +74,21 @@ class MenuAppBar extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  toggleDrawer: () => dispatch(toggleDrawer())
+});
+
+const mapStateToProps = state => ({
+  drawer: state.layout.drawer
+});
+
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MenuAppBar);
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(MenuAppBar)
+);

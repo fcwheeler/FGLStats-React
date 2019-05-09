@@ -106,7 +106,12 @@ class LeaderBoardList extends Component {
                         </Button>
                       </TableCell>
                       <TableCell> {row.owner}</TableCell>
-                      <TableCell align="right">{row.YTDearnings}</TableCell>
+                      <TableCell align="right">
+                        {row.YTDearnings.toString().replace(
+                          /\B(?=(\d{3})+(?!\d))/g,
+                          ","
+                        )}
+                      </TableCell>
                     </TableRow>
                   ))
                 ) : (
