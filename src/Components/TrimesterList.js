@@ -22,15 +22,15 @@ const styles = theme => ({
 const Trimesters = [
   {
     start: 0,
-    end: 11
+    end: 9
   },
   {
-    start: 12,
-    end: 20
+    start: 10,
+    end: 18
   },
   {
-    start: 24,
-    end: 30
+    start: 19,
+    end: 27
   }
 ];
 

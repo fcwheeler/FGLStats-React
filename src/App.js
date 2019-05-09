@@ -6,7 +6,9 @@ import TeamReport from "./views/TeamReport";
 import GameReport from "./views/GameReport";
 import SurvivorPool from "./views/SurvivorPool";
 import Trimesters from "./views/Trimesters";
+import HighestFinishers from "./views/HighestFinishers";
 import MenuAppBar from "./Components/MenuAppBar";
+
 import "./App.css";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -107,6 +109,11 @@ class App extends Component {
                 render={() => <SurvivorPool />}
               />
               <Route exact path="/Trimesters" render={() => <Trimesters />} />
+              <Route
+                exact
+                path="/HighestFinishers"
+                render={() => <HighestFinishers />}
+              />
             </div>
           </BrowserRouter>
         )}
