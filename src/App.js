@@ -19,6 +19,11 @@ import { fetchLeaderboard } from "./actions/leaderboardAction";
 import { fetchWeeklyPicks } from "./actions/weeklypicksAction";
 import { Auth } from "aws-amplify";
 import { Authenticator } from "aws-amplify-react";
+import ReactGA from 'react-ga';
+
+
+  ReactGA.initialize('UA-139923249-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
 
 const charttheme = require("./Components/highchartTheme_538.json");
 
