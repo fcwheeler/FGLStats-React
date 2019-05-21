@@ -134,6 +134,19 @@ class SideDrawer extends Component {
                     <ListItemText primary="Highest Finishers Pool" />
                   </ListItem>
                 </Link>
+                <Link
+                  component={RouterLink}
+                  to="/TournamentPickSummary"
+                  underline="none"
+                  onClick={event => this.props.toggleDrawer()}
+                >
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ListIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Tournament Pick Summary" />
+                  </ListItem>
+                </Link>
               </List>
             </div>
           </div>

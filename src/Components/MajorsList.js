@@ -26,14 +26,12 @@ class MajorsList extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.weeklypicks);
     if (Object.keys(this.props.weeklypicks).length > 0) {
       this.getMajorsTotal();
     }
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps);
     if (prevProps.weeklypicks !== this.props.weeklypicks) {
       this.getMajorsTotal();
     }

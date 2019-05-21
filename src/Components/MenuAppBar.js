@@ -8,11 +8,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import GolfIcon from "@material-ui/icons/GolfCourse";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import { Icon } from "@material-ui/core";
 
 const styles = {
   root: {
@@ -64,7 +66,9 @@ class MenuAppBar extends React.Component {
             >
               <MenuIcon />
             </IconButton>
+
             <Typography variant="h6" color="inherit" className={classes.grow}>
+              <GolfIcon />
               {this.props.title}
             </Typography>
           </Toolbar>

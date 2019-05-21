@@ -92,19 +92,6 @@ class Dashboard extends Component {
               </Card>
             </GridItem>
           </GridContainer>
-
-          <Grid item xs={12} sm={12} md={10}>
-            <Paper className={classes.paper} elevation={1}>
-              <Chart />
-            </Paper>
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={8}>
-            <Paper className={classes.paper} elevation={1}>
-              <h2>Top 10 Teams</h2>
-              <LeaderboardList topx="10" />
-            </Paper>
-          </Grid>
         </Grid>
       </div>
     );

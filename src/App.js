@@ -8,6 +8,7 @@ import SurvivorPool from "./views/SurvivorPool";
 import Trimesters from "./views/Trimesters";
 import HighestFinishers from "./views/HighestFinishers";
 import MajorsPool from "./views/MajorsPool";
+import TournamentPickSummary from "./views/TournamentPickSummary";
 import MenuAppBar from "./Components/MenuAppBar";
 import SideDrawer from "./Components/SideDrawer";
 import "./App.css";
@@ -99,6 +100,11 @@ class App extends Component {
                   render={() => <HighestFinishers />}
                 />
                 <Route exact path="/MajorsPool" render={() => <MajorsPool />} />
+                <Route
+                  exact
+                  path="/TournamentPickSummary"
+                  render={() => <TournamentPickSummary />}
+                />
               </Authenticator>
             </div>
           </BrowserRouter>
@@ -124,6 +130,11 @@ class App extends Component {
                 render={() => <HighestFinishers />}
               />
               <Route exact path="/MajorsPool" render={() => <MajorsPool />} />
+              <Route
+                exact
+                path="/TournamentPickSummary"
+                render={() => <TournamentPickSummary />}
+              />
             </div>
           </BrowserRouter>
         )}
