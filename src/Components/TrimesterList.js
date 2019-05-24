@@ -7,6 +7,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Hidden from "@material-ui/core/Hidden";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 
@@ -16,6 +17,9 @@ const styles = theme => ({
   },
   winner: {
     backgroundColor: "#4fe84f"
+  },
+  tableWrapper: {
+    overflowX: "auto"
   }
 });
 
@@ -78,42 +82,48 @@ class TrimesterList extends Component {
             <h2>Trimester Report</h2>
           </Grid>
           <Grid item fullwidth>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Team</TableCell>
-                  <TableCell>Owner</TableCell>
-                  <TableCell>Total</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.props.weeklypicks.teams ? (
-                  this.getTrimesterTeams().map((team, index) => {
-                    return (
-                      <TableRow
-                        key={index}
-                        className={
-                          team.tridone && index === 0 ? classes.winner : ""
-                        }
-                      >
-                        <TableCell>{team.formattedteamname}</TableCell>
-                        <TableCell>{team.owner}</TableCell>
-                        <TableCell>
-                          {team.tritotal
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                        </TableCell>
-                        <TableCell />
-                      </TableRow>
-                    );
-                  })
-                ) : (
+            <div className={classes.tableWrapper}>
+              <Table>
+                <TableHead>
                   <TableRow>
-                    <TableCell>Loading...</TableCell>
+                    <TableCell>Team</TableCell>
+                    <Hidden mdDown>
+                      <TableCell>Owner</TableCell>
+                    </Hidden>
+                    <TableCell>Total</TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {this.props.weeklypicks.teams ? (
+                    this.getTrimesterTeams().map((team, index) => {
+                      return (
+                        <TableRow
+                          key={index}
+                          className={
+                            team.tridone && index === 0 ? classes.winner : ""
+                          }
+                        >
+                          <TableCell>{team.formattedteamname}</TableCell>
+                          <Hidden mdDown>
+                            <TableCell>{team.owner}</TableCell>
+                          </Hidden>
+                          <TableCell>
+                            {team.tritotal
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </TableCell>
+                          <TableCell />
+                        </TableRow>
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      <TableCell>Loading...</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </Grid>
         </Grid>
       </div>

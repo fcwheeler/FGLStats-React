@@ -7,15 +7,23 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Hidden from "@material-ui/core/Hidden";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    width: "100%",
+    overflowX: "auto"
   },
   winner: {
     backgroundColor: "#4fe84f"
+  },
+  tableWrapper: {
+    overflowX: "auto"
   }
 });
 
@@ -77,38 +85,44 @@ class MajorsList extends Component {
             <h2>Majors Pool Leaders</h2>
           </Grid>
           <Grid item>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Team</TableCell>
-                  <TableCell>Owner</TableCell>
-                  <TableCell>Majors Earnings</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.state.teams ? (
-                  this.state.teams.map((team, index) => {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell>{team.formattedteamname}</TableCell>
-                        <TableCell>{team.owner}</TableCell>
-                        <TableCell>
-                          {team.MajorsTotal.toString().replace(
-                            /\B(?=(\d{3})+(?!\d))/g,
-                            ","
-                          )}
-                        </TableCell>
-                        <TableCell />
-                      </TableRow>
-                    );
-                  })
-                ) : (
+            <div className={classes.tableWrapper}>
+              <Table>
+                <TableHead>
                   <TableRow>
-                    <TableCell>Loading...</TableCell>
+                    <TableCell>Team</TableCell>
+                    <Hidden mdDown>
+                      <TableCell>Owner</TableCell>
+                    </Hidden>
+                    <TableCell>Majors Earnings</TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {this.state.teams ? (
+                    this.state.teams.map((team, index) => {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{team.formattedteamname}</TableCell>
+                          <Hidden mdDown>
+                            <TableCell>{team.owner}</TableCell>
+                          </Hidden>
+                          <TableCell>
+                            {team.MajorsTotal.toString().replace(
+                              /\B(?=(\d{3})+(?!\d))/g,
+                              ","
+                            )}
+                          </TableCell>
+                          <TableCell />
+                        </TableRow>
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      <TableCell>Loading...</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </Grid>
         </Grid>
       </div>

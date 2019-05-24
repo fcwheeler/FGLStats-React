@@ -8,11 +8,6 @@ import MajorsList from "../Components/MajorsList";
 const styles = theme => ({
   root: {
     flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    height: "100%",
-    color: theme.palette.text.secondary
   }
 });
 class MajorsPool extends Component {
@@ -31,7 +26,7 @@ class MajorsPool extends Component {
           className={classes.root}
           spacing={16}
         >
-          <Grid item xs={12} xl={8}>
+          <Grid item xs={12} md={9}>
             <Paper className={classes.paper} elevation={1}>
               <MajorsList week={1} />
             </Paper>

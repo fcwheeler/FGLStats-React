@@ -41,7 +41,7 @@ class Trimesters extends Component {
           className={classes.root}
           spacing={16}
         >
-          <Grid item xs={12} xl={8}>
+          <Grid item xs={12} md={10} lg={8}>
             <Tabs
               value={this.state.value}
               onChange={this.handleChange}
@@ -54,7 +54,7 @@ class Trimesters extends Component {
               <Tab value={2} label="Trimester 3" />
             </Tabs>
           </Grid>
-          <Grid item xs={12} xl={8}>
+          <Grid item xs={12} md={10} lg={8}>
             <Paper className={classes.paper} elevation={1}>
               <TrimesterList tri={this.state.value} />
             </Paper>

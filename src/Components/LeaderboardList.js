@@ -7,7 +7,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { Link, Redirect } from "react-router-dom";
+import Hidden from "@material-ui/core/Hidden";
+import { Redirect } from "react-router-dom";
 import { LoadingOverlay, Loader } from "react-overlay-loader";
 
 import { connect } from "react-redux";
@@ -35,8 +36,9 @@ const styles = theme => ({
   control: {
     padding: theme.spacing.unit * 2
   },
-  table: {
-    minWidth: 700
+  table: {},
+  tableWrapper: {
+    overflowX: "auto"
   }
 });
 
@@ -45,14 +47,11 @@ class LeaderBoardList extends Component {
     super(props);
     this.handleLinkClick = this.handleLinkClick.bind(this);
 
-    this.state = { redirect: false };
+    this.state = { redirect: false, filter: "" };
   }
 
   handle_Search = e => {
-    var filteredteams = this.props.leaderboard.teams.filter(item =>
-      item.name.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    console.log(filteredteams);
+    this.setState({ filter: e.target.value.toLowerCase() });
   };
 
   componentDidMount() {}
@@ -87,38 +86,60 @@ class LeaderBoardList extends Component {
               onChange={this.handle_Search}
               className={classes.textField}
             />
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Team</TableCell>
-                  <TableCell>Owner</TableCell>
-                  <TableCell align="right">YTD Earnings</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.props.leaderboard.teams &&
-                this.props.leaderboard.teams.length > 0 ? (
-                  this.props.leaderboard.teams.slice(0, 10 - 1).map(row => (
-                    <TableRow key={row.id}>
-                      <TableCell align="left">
-                        <Button value={row.name} onClick={this.handleLinkClick}>
-                          {row.name}
-                        </Button>
-                      </TableCell>
-                      <TableCell> {row.owner}</TableCell>
-                      <TableCell align="right">
-                        {row.YTDearnings.toString().replace(
-                          /\B(?=(\d{3})+(?!\d))/g,
-                          ","
-                        )}
-                      </TableCell>
+            <div className={classes.tableWrapper}>
+              <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Team</TableCell>
+                    <Hidden mdDown>
+                      <TableCell>Owner</TableCell>
+                    </Hidden>
+                    <TableCell align="right">YTD Earnings</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {this.props.leaderboard.teams &&
+                  this.props.leaderboard.teams.length > 0 ? (
+                    this.props.leaderboard.teams
+                      .filter(team => {
+                        return this.state.filter !== ""
+                          ? team.name
+                              .toLowerCase()
+                              .includes(this.state.filter) ||
+                              team.owner
+                                .toLowerCase()
+                                .includes(this.state.filter)
+                          : true;
+                      })
+                      .map(row => (
+                        <TableRow key={row.id}>
+                          <TableCell alignLeft>
+                            <Button
+                              value={row.name}
+                              onClick={this.handleLinkClick}
+                            >
+                              {row.name}
+                            </Button>
+                          </TableCell>
+                          <Hidden mdDown>
+                            <TableCell> {row.owner}</TableCell>
+                          </Hidden>
+                          <TableCell align="right">
+                            {row.YTDearnings.toString().replace(
+                              /\B(?=(\d{3})+(?!\d))/g,
+                              ","
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                  ) : (
+                    <TableRow>
+                      <TableCell>Loading...</TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <Loader fullpage />
-                )}
-              </TableBody>
-            </Table>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </>
         )}
       </>

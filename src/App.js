@@ -12,18 +12,15 @@ import TournamentPickSummary from "./views/TournamentPickSummary";
 import MenuAppBar from "./Components/MenuAppBar";
 import SideDrawer from "./Components/SideDrawer";
 import "./App.css";
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Highcharts from "highcharts";
 import { fetchLeaderboard } from "./actions/leaderboardAction";
 import { fetchWeeklyPicks } from "./actions/weeklypicksAction";
-import { Auth } from "aws-amplify";
-import { Authenticator } from "aws-amplify-react";
-import ReactGA from 'react-ga';
 
+import Analytics from "react-router-ga";
 
-  ReactGA.initialize('UA-139923249-1');
-  ReactGA.pageview(window.location.pathname + window.location.search);
+// ReactGA.initialize('UA-139923249-1');
 
 const charttheme = require("./Components/highchartTheme_538.json");
 
@@ -45,76 +42,10 @@ class App extends Component {
 
   render() {
     this._validAuthStates = ["signedIn"];
-    const AuthOn = false;
     return (
       <div>
-        {AuthOn ? (
-          <BrowserRouter forceRefresh={false}>
-            <div>
-              <MenuAppBar title="FGL Stats" />
-              <SideDrawer />
-              <Authenticator
-                signUpConfig={{
-                  hiddenDefaults: ["username", "phone_number"],
-                  signUpFields: [
-                    {
-                      label: "Email",
-                      key: "email",
-                      required: true,
-                      displayOrder: 1,
-                      type: "string",
-                      custom: false
-                    },
-                    {
-                      label: "Name",
-                      key: "owner_name",
-                      required: true,
-                      displayOrder: 1,
-                      type: "string",
-                      custom: true
-                    },
-                    {
-                      label: "Password",
-                      key: "password",
-                      required: true,
-                      displayOrder: 1,
-                      type: "password",
-                      custom: false
-                    }
-                  ]
-                }}
-              >
-                <Route exact path="/" render={() => <Leaderboard />} />
-                <Route exact path="/DashBoard" render={() => <Dashboard />} />
-                <Route
-                  exact
-                  path="/Leaderboard"
-                  render={() => <Leaderboard />}
-                />
-                <Route exact path="/TeamReport" render={() => <TeamReport />} />
-                <Route exact path="/GameReport" render={() => <GameReport />} />
-                <Route
-                  exact
-                  path="/SurvivorPool"
-                  render={() => <SurvivorPool />}
-                />
-                <Route exact path="/Trimesters" render={() => <Trimesters />} />
-                <Route
-                  exact
-                  path="/HighestFinishers"
-                  render={() => <HighestFinishers />}
-                />
-                <Route exact path="/MajorsPool" render={() => <MajorsPool />} />
-                <Route
-                  exact
-                  path="/TournamentPickSummary"
-                  render={() => <TournamentPickSummary />}
-                />
-              </Authenticator>
-            </div>
-          </BrowserRouter>
-        ) : (
-          <BrowserRouter forceRefresh={false}>
+        <BrowserRouter forceRefresh={false}>
+          <Analytics id="UA-139923249-1" debug>
             <div>
               <MenuAppBar title="FGL Stats" />
               <SideDrawer />
@@ -141,8 +72,8 @@ class App extends Component {
                 render={() => <TournamentPickSummary />}
               />
             </div>
-          </BrowserRouter>
-        )}
+          </Analytics>
+        </BrowserRouter>
       </div>
     );
   }

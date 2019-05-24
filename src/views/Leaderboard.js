@@ -4,7 +4,6 @@ import LeaderboardList from "../Components/LeaderboardList";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
-
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -28,7 +27,7 @@ class Leaderboard extends Component {
           className={classes.root}
           spacing={16}
         >
-          <Grid item xs={9}>
+          <Grid item xs={12} md={9}>
             <Paper className={classes.root} elevation={1}>
               <LeaderboardList />
             </Paper>
@@ -38,7 +37,5 @@ class Leaderboard extends Component {
     );
   }
 }
-
-
 
 export default withStyles(styles)(Leaderboard);
