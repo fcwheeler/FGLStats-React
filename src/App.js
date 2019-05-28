@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import Highcharts from "highcharts";
 import { fetchLeaderboard } from "./actions/leaderboardAction";
 import { fetchWeeklyPicks } from "./actions/weeklypicksAction";
+import { fetchRanks } from "./actions/ranksAction";
 
 import Analytics from "react-router-ga";
 
@@ -38,6 +39,7 @@ class App extends Component {
     Highcharts.setOptions(charttheme);
     this.props.fetchleaderboard();
     this.props.fetchweeklyPicks();
+    this.props.fetchRanks();
   }
 
   render() {
@@ -87,12 +89,14 @@ const TeamReportID = ({ match }) => (
 
 const mapStateToProps = state => ({
   leaderboard: state.leaderboardReducer,
-  weeklypicks: state.weeklypicksReducer
+  weeklypicks: state.weeklypicksReducer,
+  ranks: state.ranksReducer
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchleaderboard: () => dispatch(fetchLeaderboard()),
-  fetchweeklyPicks: () => dispatch(fetchWeeklyPicks())
+  fetchweeklyPicks: () => dispatch(fetchWeeklyPicks()),
+  fetchRanks: () => dispatch(fetchRanks())
 });
 
 export default withStyles(styles)(

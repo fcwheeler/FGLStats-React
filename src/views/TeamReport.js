@@ -6,6 +6,7 @@ import PlaceGauge from "../Components/PlaceGauge";
 import WeekHistoryChart from "../Components/WeekHistoryChart";
 import WeeklyPicksTable from "../Components/WeeklyPicksTable";
 import PickBreakdownChart from "../Components/PickBreakdownChart";
+import UnusedTopList from "../Components/UnusedTopList";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import SelectTeam from "../Components/SelectTeam";
@@ -129,6 +130,11 @@ class TeamReport extends Component {
               <Grid item xs={12} md={8} lg={8} xl={8}>
                 <Paper className={classes.root} elevation={1}>
                   <PickBreakdownChart />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={8} lg={8} xl={8}>
+                <Paper className={classes.root} elevation={1}>
+                  <UnusedTopList />
                 </Paper>
               </Grid>
             </Grid>
