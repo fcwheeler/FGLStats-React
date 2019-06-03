@@ -7,7 +7,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListIcon from "@material-ui/icons/List";
+import ArrowIcon from "@material-ui/icons/KeyboardArrowRight";
 import Close from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Link from "@material-ui/core/Link";
@@ -62,10 +62,10 @@ class SideDrawer extends Component {
                   onClick={event => this.props.toggleDrawer()}
                 >
                   <ListItem button>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
                     <ListItemText primary="LeaderBoard" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </Link>
                 <Link
@@ -75,10 +75,10 @@ class SideDrawer extends Component {
                   onClick={event => this.props.toggleDrawer()}
                 >
                   <ListItem button>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
                     <ListItemText primary="Team Report" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </Link>
                 <Link
@@ -88,10 +88,10 @@ class SideDrawer extends Component {
                   onClick={event => this.props.toggleDrawer()}
                 >
                   <ListItem button>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
                     <ListItemText primary="Survivor Pool" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </Link>
                 <Link
@@ -102,10 +102,10 @@ class SideDrawer extends Component {
                 >
                   {" "}
                   <ListItem button>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
                     <ListItemText primary="Trimesters" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </Link>
                 <Link
@@ -115,10 +115,10 @@ class SideDrawer extends Component {
                   onClick={event => this.props.toggleDrawer()}
                 >
                   <ListItem button>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
                     <ListItemText primary="Majors Pool" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </Link>
                 <Link
@@ -128,10 +128,10 @@ class SideDrawer extends Component {
                   onClick={event => this.props.toggleDrawer()}
                 >
                   <ListItem button>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
                     <ListItemText primary="Highest Finishers Pool" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </Link>
                 <Link
@@ -141,10 +141,23 @@ class SideDrawer extends Component {
                   onClick={event => this.props.toggleDrawer()}
                 >
                   <ListItem button>
-                    <ListItemIcon>
-                      <ListIcon />
-                    </ListItemIcon>
                     <ListItemText primary="Tournament Pick Summary" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
+                  </ListItem>
+                </Link>
+                <Link
+                  component={RouterLink}
+                  to="/PickAlignment"
+                  underline="none"
+                  onClick={event => this.props.toggleDrawer()}
+                >
+                  <ListItem button>
+                    <ListItemText primary="Pick Alignment" />
+                    <ListItemIcon>
+                      <ArrowIcon />
+                    </ListItemIcon>
                   </ListItem>
                 </Link>
               </List>

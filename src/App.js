@@ -9,6 +9,8 @@ import Trimesters from "./views/Trimesters";
 import HighestFinishers from "./views/HighestFinishers";
 import MajorsPool from "./views/MajorsPool";
 import TournamentPickSummary from "./views/TournamentPickSummary";
+import PickAlignment from "./views/PickAlignment";
+import Lab from "./views/Lab";
 import MenuAppBar from "./Components/MenuAppBar";
 import SideDrawer from "./Components/SideDrawer";
 import "./App.css";
@@ -72,6 +74,12 @@ class App extends Component {
                 exact
                 path="/TournamentPickSummary"
                 render={() => <TournamentPickSummary />}
+              />
+              <Route exact path="/Lab" render={() => <Lab />} />
+              <Route
+                exact
+                path="/PickAlignment"
+                render={() => <PickAlignment />}
               />
             </div>
           </Analytics>
