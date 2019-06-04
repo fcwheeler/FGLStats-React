@@ -180,13 +180,11 @@ function PickCorrelations(props) {
               })
             ) : props.weeklypicks.teams && setpickSummary(getheatmap()) ? (
               <TableRow>
-                <TableCell />
-                <TableCell />
+                <TableCell>Loading...</TableCell>
               </TableRow>
             ) : (
               <TableRow>
-                <TableCell />
-                <TableCell />
+                <TableCell>Loading...</TableCell>
               </TableRow>
             )}
           </TableBody>

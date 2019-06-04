@@ -63,6 +63,8 @@ class TrimesterList extends Component {
         return b.tritotal - a.tritotal;
       });
 
+    console.log(teamtotals);
+
     return teamtotals;
   }
 
