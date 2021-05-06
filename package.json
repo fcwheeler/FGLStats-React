@@ -9,7 +9,7 @@
     "aws-amplify-react": "^2.3.0",
     "cheerio": "^1.0.0-rc.2",
     "cheerio-tableparser": "^1.0.1",
-    "highcharts": "^7.0.3",
+    "highcharts": "^9.0.0",
     "highcharts-more": "^0.1.7",
     "highcharts-react-official": "^2.0.0",
     "highcharts-solid-gauge": "^0.1.7",
